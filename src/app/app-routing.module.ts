@@ -6,7 +6,7 @@ import { Nested1Component } from './nested1/nested1.component';
 
 const routes: Routes = [
   {
-    path: 'exp',
+    path: 'exp/:orgID',
     component: ExplorerComponent,
   },
   {

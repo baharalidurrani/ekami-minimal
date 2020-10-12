@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-explorer',
@@ -6,7 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./explorer.component.css'],
 })
 export class ExplorerComponent implements OnInit {
-  constructor() {}
+  constructor(private route: ActivatedRoute) {}
+  param: string;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      console.log(params.get('orgID'));
+    });
+  }
 }
