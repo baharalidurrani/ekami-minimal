@@ -13,6 +13,21 @@ const QCams = gql`
   }
 `;
 
+const userOrg = gql`
+  query {
+    userOrganization {
+      id
+      first_name
+      last_name
+      email
+      organization {
+        id
+        name
+      }
+    }
+  }
+`;
+
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
@@ -29,7 +44,7 @@ export class GraphComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.querySubscription = this.apollo
       .watchQuery<any>({
-        query: QCams,
+        query: userOrg,
       })
       .valueChanges.subscribe((result) => {
         console.log(result);
