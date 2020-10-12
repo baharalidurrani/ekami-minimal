@@ -7,6 +7,9 @@ import { ExplorerComponent } from './explorer/explorer.component';
 import { ModulesComponent } from './modules/modules.component';
 import { SiteComponent } from './site/site.component';
 import { Nested1Component } from './nested1/nested1.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
+import { GraphComponent } from './graph/graph.component';
 
 @NgModule({
   declarations: [
@@ -14,13 +17,11 @@ import { Nested1Component } from './nested1/nested1.component';
     ExplorerComponent,
     ModulesComponent,
     SiteComponent,
-    Nested1Component
+    Nested1Component,
+    GraphComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

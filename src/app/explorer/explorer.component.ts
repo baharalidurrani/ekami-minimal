@@ -12,7 +12,7 @@ export class ExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      console.log(params.get('orgID'));
+      this.param = params.get('orgID');
     });
   }
 }
