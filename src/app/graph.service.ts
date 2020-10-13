@@ -23,6 +23,14 @@ const QUserOrg = gql`
       organization {
         id
         name
+        sites {
+          id
+          name
+          floors {
+            id
+            name
+          }
+        }
       }
     }
   }

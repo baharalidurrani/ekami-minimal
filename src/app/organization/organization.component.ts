@@ -9,14 +9,15 @@ import { GraphService } from '../graph.service';
 export class OrganizationComponent implements OnInit {
   loading = true;
   camsList: any;
-  userOrg: any;
+  user: any;
 
   constructor(private graphService: GraphService) {}
 
   async ngOnInit(): Promise<void> {
     this.graphService.userOrg$.subscribe((result) => {
-      this.userOrg = result.data;
+      this.user = result.data.userOrganization;
       this.loading = result.loading;
+      console.log('this.userOrg', this.user);
     });
   }
 }

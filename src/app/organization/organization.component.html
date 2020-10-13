@@ -1,2 +1,8 @@
 <p>organization works!</p>
-<p *ngIf="!loading">Org: {{ userOrg.userOrganization.email }}</p>
+<div *ngIf="!loading">
+  <p>User: {{ user.first_name + " " + user.last_name }}</p>
+  <p>Org: {{ user.organization.name }}</p>
+  <ul>
+    <li *ngFor="let site of user.organization.sites">Site: {{ site.name }}</li>
+  </ul>
+</div>
