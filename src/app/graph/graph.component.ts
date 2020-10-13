@@ -1,58 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Apollo, gql } from 'apollo-angular';
-
-// We use the gql tag to parse our query string into a query document
-const QCams = gql`
-  query {
-    cams {
-      id
-      name
-    }
-  }
-`;
-
-const userOrg = gql`
-  query {
-    userOrganization {
-      id
-      first_name
-      last_name
-      email
-      organization {
-        id
-        name
-      }
-    }
-  }
-`;
+import { Component, OnInit } from '@angular/core';
+import { GraphService } from '../graph.service';
 
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.css'],
 })
-export class GraphComponent implements OnInit, OnDestroy {
-  loading: boolean;
-  cams: any[];
+export class GraphComponent implements OnInit {
+  loading = true;
+  camsList: any;
+  userOrg: any;
 
-  private querySubscription: Subscription;
+  constructor(private graphService: GraphService) {}
 
-  constructor(private apollo: Apollo) {}
-
-  ngOnInit(): void {
-    this.querySubscription = this.apollo
-      .watchQuery<any>({
-        query: userOrg,
-      })
-      .valueChanges.subscribe((result) => {
-        console.log(result);
-        this.loading = result.loading;
-        this.cams = result.data.cams;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.querySubscription.unsubscribe();
+  async ngOnInit(): Promise<void> {
+    this.graphService.userOrg$.subscribe((result) => {
+      this.userOrg = result.data;
+      this.loading = result.loading;
+    });
   }
 }

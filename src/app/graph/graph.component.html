@@ -1,4 +1,5 @@
 <p>graph works!</p>
-<ul>
-  <li *ngFor="let cam of cams">{{ cam.name }}</li>
-</ul>
+<!-- <ul>
+  <li *ngFor="let cam of camsList">{{ cam.name }}</li>
+</ul> -->
+<p *ngIf="!loading">Org: {{ userOrg.userOrganization.email }}</p>
