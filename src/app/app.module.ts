@@ -9,7 +9,7 @@ import { SiteComponent } from './site/site.component';
 import { Nested1Component } from './nested1/nested1.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
-import { GraphComponent } from './graph/graph.component';
+import { OrganizationComponent } from './organization/organization.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { GraphComponent } from './graph/graph.component';
     ModulesComponent,
     SiteComponent,
     Nested1Component,
-    GraphComponent,
+    OrganizationComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [],
