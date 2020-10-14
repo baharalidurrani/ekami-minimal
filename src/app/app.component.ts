@@ -10,5 +10,6 @@ export class AppComponent implements OnInit {
   constructor(private graphService: GraphService) {}
   ngOnInit(): void {
     this.graphService.userOrgQuery();
+    this.graphService.camsQuery();
   }
 }

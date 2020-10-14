@@ -1,8 +1,19 @@
-<p>organization works!</p>
-<div *ngIf="!loading">
-  <p>User: {{ user.first_name + " " + user.last_name }}</p>
-  <p>Org: {{ user.organization.name }}</p>
+<p>User info</p>
+<div *ngIf="!userLoading">
+  <p>User: {{ userOrg.first_name + " " + userOrg.last_name }}</p>
+  <p>Org: {{ userOrg.organization.name }}</p>
   <ul>
-    <li *ngFor="let site of user.organization.sites">Site: {{ site.name }}</li>
+    <li *ngFor="let site of userOrg.organization.sites">
+      Site: {{ site.name }}
+    </li>
+  </ul>
+</div>
+
+<p>Cams List</p>
+<div *ngIf="!camsLoading">
+  <ul>
+    <li *ngFor="let cam of camsList">
+      CamID: {{ cam.id }} CamName: {{ cam.name }} CamChannel: {{ cam.channel }}
+    </li>
   </ul>
 </div>

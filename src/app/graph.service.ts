@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Apollo, gql } from 'apollo-angular';
 import { ApolloQueryResult } from '@apollo/client/core';
+import { CameraType, UserType } from 'types/gql';
 
 // We use the gql tag to parse our query string into a query document
 const QCams = gql`
@@ -42,13 +43,17 @@ const QUserOrg = gql`
 export class GraphService {
   constructor(private apollo: Apollo) {}
 
-  public userOrg$: Observable<ApolloQueryResult<any>>;
-  public camList$: Observable<ApolloQueryResult<any>>;
+  public userOrg$: Observable<
+    ApolloQueryResult<{ userOrganization: UserType }>
+  >;
+  public camList$: Observable<ApolloQueryResult<{ cams: CameraType[] }>>;
 
   userOrgQuery(): void {
-    this.userOrg$ = this.apollo.query<any>({ query: QUserOrg });
+    this.userOrg$ = this.apollo.query<{ userOrganization: UserType }>({
+      query: QUserOrg,
+    });
   }
   camsQuery(): void {
-    this.camList$ = this.apollo.query<any>({ query: QCams });
+    this.camList$ = this.apollo.query<{ cams: CameraType[] }>({ query: QCams });
   }
 }
