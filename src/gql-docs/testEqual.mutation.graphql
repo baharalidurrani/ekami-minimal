@@ -1,0 +1,3 @@
+mutation testEqual($n1: Float!, $n2: Float!) {
+  testEqual(num1: $n1, num2: $n2)
+}

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CameraType, UserType } from 'types/gql';
-import { GraphService } from '../graph.service';
+import { CameraType, UserType } from '../../generated/graphql';
 
 @Component({
   selector: 'app-organization',
@@ -13,22 +12,7 @@ export class OrganizationComponent implements OnInit {
   camsList: CameraType[];
   userOrg: UserType;
 
-  constructor(private graphService: GraphService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.graphService.camList$.subscribe((result) => {
-      console.log('result.data.cams', result.data.cams);
-      this.camsList = result.data.cams;
-      this.camsLoading = result.loading;
-    });
-    this.graphService.userOrg$.subscribe((result) => {
-      console.log('result.data.userOrganization', result.data.userOrganization);
-      this.userOrg = result.data.userOrganization;
-      this.userLoading = result.loading;
-    });
-    this.graphService.testMutation$.subscribe((value) => {
-      console.log('Mutation: value.data.testEqual');
-      console.log(value.data.testEqual);
-    });
-  }
+  ngOnInit(): void {}
 }

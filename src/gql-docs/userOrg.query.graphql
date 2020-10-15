@@ -1,0 +1,20 @@
+query userOrganization {
+  userOrganization {
+    id
+    first_name
+    last_name
+    email
+    organization {
+      id
+      name
+      sites {
+        id
+        name
+        floors {
+          id
+          name
+        }
+      }
+    }
+  }
+}
