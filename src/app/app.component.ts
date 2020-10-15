@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   TestEqualGQL,
   TestRandomGQL,
+  TestSubGQL,
   UserOrganizationGQL,
 } from '../generated/graphql';
 
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   constructor(
     private userOrg: UserOrganizationGQL,
     private testEqual: TestEqualGQL,
-    private testRandom: TestRandomGQL
+    private testRandom: TestRandomGQL,
+    private testSub: TestSubGQL
   ) {}
   ngOnInit(): void {
     this.userOrg.fetch().subscribe((result) => {
@@ -25,6 +27,10 @@ export class AppComponent implements OnInit {
     });
     this.testRandom.fetch().subscribe((r) => {
       console.log('Yay new testQuery', r.data.testRandom);
+    });
+
+    this.testSub.subscribe().subscribe((r) => {
+      console.log('Yay new test === Subscription', r.data.testSub);
     });
   }
 }

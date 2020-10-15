@@ -5,9 +5,11 @@
 export const environment = {
   production: false,
   api: {
-    uri: `http://127.0.0.1`,
+    uriHTTP: `http://127.0.0.1`,
+    uriWSS: `ws://127.0.0.1`,
     port: 4000,
     graphqlEndpoint: `/graphql/ql`,
+    graphqlSubscription: `/graphql`,
     authEndpoint: `/oauth/token`,
     headers: {
       client_id: 'server',

@@ -1336,6 +1336,14 @@ export type TestRandomQuery = (
   & Pick<Query, 'testRandom'>
 );
 
+export type TestSubSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TestSubSubscription = (
+  { __typename?: 'Subscription' }
+  & Pick<Subscription, 'testSub'>
+);
+
 export type UserOrganizationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1405,6 +1413,22 @@ export const TestRandomDocument = gql`
   })
   export class TestRandomGQL extends Apollo.Query<TestRandomQuery, TestRandomQueryVariables> {
     document = TestRandomDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const TestSubDocument = gql`
+    subscription testSub {
+  testSub
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class TestSubGQL extends Apollo.Subscription<TestSubSubscription, TestSubSubscriptionVariables> {
+    document = TestSubDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
