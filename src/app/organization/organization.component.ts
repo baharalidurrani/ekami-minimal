@@ -26,5 +26,9 @@ export class OrganizationComponent implements OnInit {
       this.userOrg = result.data.userOrganization;
       this.userLoading = result.loading;
     });
+    this.graphService.testMutation$.subscribe((value) => {
+      console.log('Mutation: value.data.testEqual');
+      console.log(value.data.testEqual);
+    });
   }
 }

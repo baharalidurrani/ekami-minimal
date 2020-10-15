@@ -11,5 +11,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.graphService.userOrgQuery();
     this.graphService.camsQuery();
+    this.graphService.testSub();
   }
 }
