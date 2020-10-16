@@ -1,0 +1,11 @@
+query site($id: String!) {
+  site(id: $id) {
+    id
+    name
+    location
+    floors {
+      id
+      name
+    }
+  }
+}

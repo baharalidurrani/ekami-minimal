@@ -3,11 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { ModulesComponent } from './modules/modules.component';
 import { Nested1Component } from './nested1/nested1.component';
 import { OrganizationComponent } from './organization/organization.component';
+import { SiteComponent } from './site/site.component';
 
 const routes: Routes = [
   {
     path: 'org/:id',
     component: OrganizationComponent,
+  },
+  {
+    path: 'site/:id',
+    component: SiteComponent,
   },
   {
     path: 'mod',

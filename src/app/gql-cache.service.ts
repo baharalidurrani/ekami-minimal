@@ -4,6 +4,7 @@ import { SubscriptionResult } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import {
   OrganizationQuery,
+  SiteQuery,
   TestEqualMutation,
   TestRandomQuery,
   TestSubSubscription,
@@ -19,5 +20,6 @@ export class GqlCacheService {
   public userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
   public testRandom$: Observable<ApolloQueryResult<TestRandomQuery>>;
   public testSub$: Observable<SubscriptionResult<TestSubSubscription>>;
+  public siteQL$: Observable<ApolloQueryResult<SiteQuery>>;
   constructor() {}
 }

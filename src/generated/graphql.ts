@@ -1334,6 +1334,23 @@ export type OrganizationQuery = (
   ) }
 );
 
+export type SiteQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type SiteQuery = (
+  { __typename?: 'Query' }
+  & { site: (
+    { __typename?: 'SiteType' }
+    & Pick<SiteType, 'id' | 'name' | 'location'>
+    & { floors?: Maybe<Array<(
+      { __typename?: 'FloorType' }
+      & Pick<FloorType, 'id' | 'name'>
+    )>> }
+  ) }
+);
+
 export type TestEqualMutationVariables = Exact<{
   n1: Scalars['Float'];
   n2: Scalars['Float'];
@@ -1428,6 +1445,30 @@ export const OrganizationDocument = gql`
   })
   export class OrganizationGQL extends Apollo.Query<OrganizationQuery, OrganizationQueryVariables> {
     document = OrganizationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SiteDocument = gql`
+    query site($id: String!) {
+  site(id: $id) {
+    id
+    name
+    location
+    floors {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SiteGQL extends Apollo.Query<SiteQuery, SiteQueryVariables> {
+    document = SiteDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

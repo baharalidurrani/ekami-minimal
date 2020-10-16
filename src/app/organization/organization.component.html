@@ -1,6 +1,10 @@
 <div *ngIf="org">
   <p>Org: {{ org.name }}</p>
   <ul>
-    <li *ngFor="let site of org.sites">Site: {{ site.name }}</li>
+    <li *ngFor="let site of org.sites">
+      <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
+        {{ site.name }}</a
+      >
+    </li>
   </ul>
 </div>
