@@ -1317,6 +1317,23 @@ export type CamsQuery = (
   )> }
 );
 
+export type OrganizationQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type OrganizationQuery = (
+  { __typename?: 'Query' }
+  & { organization: (
+    { __typename?: 'OrganizationType' }
+    & Pick<OrganizationType, 'id' | 'name' | 'email' | 'website' | 'address' | 'phone' | 'city' | 'country'>
+    & { sites?: Maybe<Array<(
+      { __typename?: 'SiteType' }
+      & Pick<SiteType, 'id' | 'name' | 'location'>
+    )>> }
+  ) }
+);
+
 export type TestEqualMutationVariables = Exact<{
   n1: Scalars['Float'];
   n2: Scalars['Float'];
@@ -1381,6 +1398,36 @@ export const CamsDocument = gql`
   })
   export class CamsGQL extends Apollo.Query<CamsQuery, CamsQueryVariables> {
     document = CamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const OrganizationDocument = gql`
+    query organization($id: String!) {
+  organization(id: $id) {
+    id
+    name
+    email
+    website
+    address
+    phone
+    city
+    country
+    sites {
+      id
+      name
+      location
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class OrganizationGQL extends Apollo.Query<OrganizationQuery, OrganizationQueryVariables> {
+    document = OrganizationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

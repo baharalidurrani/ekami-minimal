@@ -1,19 +1,6 @@
-<p>User info</p>
-<div *ngIf="!userLoading">
-  <p>User: {{ userOrg.first_name + " " + userOrg.last_name }}</p>
-  <p>Org: {{ userOrg.organization.name }}</p>
+<div *ngIf="org">
+  <p>Org: {{ org.name }}</p>
   <ul>
-    <li *ngFor="let site of userOrg.organization.sites">
-      Site: {{ site.name }}
-    </li>
-  </ul>
-</div>
-
-<p>Cams List</p>
-<div *ngIf="!camsLoading">
-  <ul>
-    <li *ngFor="let cam of camsList">
-      CamID: {{ cam.id }} CamName: {{ cam.name }} CamChannel: {{ cam.channel }}
-    </li>
+    <li *ngFor="let site of org.sites">Site: {{ site.name }}</li>
   </ul>
 </div>

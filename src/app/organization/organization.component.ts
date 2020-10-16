@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CameraType, UserType } from '../../generated/graphql';
+import { ActivatedRoute } from '@angular/router';
+import { OrganizationGQL, OrganizationType } from '../../generated/graphql';
+import { GqlCacheService } from '../gql-cache.service';
 
 @Component({
   selector: 'app-organization',
@@ -7,12 +9,24 @@ import { CameraType, UserType } from '../../generated/graphql';
   styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
-  camsLoading = true;
-  userLoading = true;
-  camsList: CameraType[];
-  userOrg: UserType;
+  org: OrganizationType;
 
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private gc: GqlCacheService,
+    private orgQL: OrganizationGQL
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    const id = this.route.snapshot.params['id'];
+    this.gc.orgQL$ = this.orgQL.fetch({ id });
+    this.gc.orgQL$.subscribe((o) => {
+      this.org = o.data.organization;
+      console.log(
+        '%corganization.component.ts onInit organization.name',
+        'color: white; background-color: #007acc;',
+        o.data.organization.name
+      );
+    });
+  }
 }

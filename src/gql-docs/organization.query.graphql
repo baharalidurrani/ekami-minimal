@@ -1,0 +1,17 @@
+query organization($id: String!) {
+  organization(id: $id) {
+    id
+    name
+    email
+    website
+    address
+    phone
+    city
+    country
+    sites {
+      id
+      name
+      location
+    }
+  }
+}

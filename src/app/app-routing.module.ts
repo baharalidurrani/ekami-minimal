@@ -6,7 +6,7 @@ import { OrganizationComponent } from './organization/organization.component';
 
 const routes: Routes = [
   {
-    path: 'org',
+    path: 'org/:id',
     component: OrganizationComponent,
   },
   {
