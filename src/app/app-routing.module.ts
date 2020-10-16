@@ -1,15 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ExplorerComponent } from './explorer/explorer.component';
 import { ModulesComponent } from './modules/modules.component';
 import { Nested1Component } from './nested1/nested1.component';
 import { OrganizationComponent } from './organization/organization.component';
 
 const routes: Routes = [
-  {
-    path: 'exp/:orgID',
-    component: ExplorerComponent,
-  },
   {
     path: 'org',
     component: OrganizationComponent,
