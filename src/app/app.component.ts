@@ -4,6 +4,7 @@ import {
   TestRandomGQL,
   TestSubGQL,
   UserOrganizationGQL,
+  UserType,
 } from '../generated/graphql';
 import { GqlCacheService } from './gql-cache.service';
 
@@ -20,9 +21,11 @@ export class AppComponent implements OnInit {
     private testRandom: TestRandomGQL,
     private testSub: TestSubGQL
   ) {}
+  user: UserType;
   ngOnInit(): void {
     this.gc.userOrg$ = this.userOrg.fetch();
     this.gc.userOrg$.subscribe((result) => {
+      this.user = result.data.userOrganization;
       console.log('Yay new query: ', result.data.userOrganization);
     });
 
