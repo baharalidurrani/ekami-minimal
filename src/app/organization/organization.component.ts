@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { OrganizationGQL, OrganizationType } from '../../generated/graphql';
 import { GqlCacheService } from '../gql-cache.service';
 
@@ -8,8 +9,9 @@ import { GqlCacheService } from '../gql-cache.service';
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.css'],
 })
-export class OrganizationComponent implements OnInit {
+export class OrganizationComponent implements OnInit, OnDestroy {
   org: OrganizationType;
+  orgQLSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,7 +22,7 @@ export class OrganizationComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
     this.gc.orgQL$ = this.orgQL.fetch({ id });
-    this.gc.orgQL$.subscribe((o) => {
+    this.orgQLSub = this.gc.orgQL$.subscribe((o) => {
       this.org = o.data.organization;
       console.log(
         '%corganization.component.ts onInit organization.name',
@@ -28,5 +30,8 @@ export class OrganizationComponent implements OnInit {
         o.data.organization.name
       );
     });
+  }
+  ngOnDestroy() {
+    this.orgQLSub.unsubscribe();
   }
 }

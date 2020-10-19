@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { UserOrganizationGQL, UserType } from '../generated/graphql';
 import { GqlCacheService } from './gql-cache.service';
 
@@ -7,15 +8,16 @@ import { GqlCacheService } from './gql-cache.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private gc: GqlCacheService,
     private userOrg: UserOrganizationGQL
   ) {}
   user: UserType;
+  userOrgSub: Subscription;
   ngOnInit(): void {
     this.gc.userOrg$ = this.userOrg.fetch();
-    this.gc.userOrg$.subscribe((result) => {
+    this.userOrgSub = this.gc.userOrg$.subscribe((result) => {
       this.user = result.data.userOrganization;
       console.log(
         '%capp.component.ts onInit userOrg',
@@ -23,5 +25,8 @@ export class AppComponent implements OnInit {
         result.data.userOrganization.email
       );
     });
+  }
+  ngOnDestroy() {
+    this.userOrgSub.unsubscribe();
   }
 }
