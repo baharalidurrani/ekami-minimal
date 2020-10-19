@@ -1317,6 +1317,23 @@ export type CamsQuery = (
   )> }
 );
 
+export type FloorQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type FloorQuery = (
+  { __typename?: 'Query' }
+  & { floor: (
+    { __typename?: 'FloorType' }
+    & Pick<FloorType, 'id' | 'name'>
+    & { zones?: Maybe<Array<(
+      { __typename?: 'ZoneType' }
+      & Pick<ZoneType, 'id' | 'name'>
+    )>> }
+  ) }
+);
+
 export type OrganizationQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1415,6 +1432,29 @@ export const CamsDocument = gql`
   })
   export class CamsGQL extends Apollo.Query<CamsQuery, CamsQueryVariables> {
     document = CamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const FloorDocument = gql`
+    query floor($id: String!) {
+  floor(id: $id) {
+    id
+    name
+    zones {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FloorGQL extends Apollo.Query<FloorQuery, FloorQueryVariables> {
+    document = FloorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

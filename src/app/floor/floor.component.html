@@ -1,0 +1,10 @@
+<div *ngIf="floor">
+  <p>Floor: {{ floor.name }}</p>
+  <ul>
+    <li *ngFor="let zone of floor.zones">
+      <a routerLink="/zone/{{ zone.id }}" routerLinkActive="active">
+        {{ zone.name }}</a
+      >
+    </li>
+  </ul>
+</div>

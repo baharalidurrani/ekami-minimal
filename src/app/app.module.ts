@@ -9,6 +9,7 @@ import { Nested1Component } from './nested1/nested1.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { OrganizationComponent } from './organization/organization.component';
+import { FloorComponent } from './floor/floor.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { OrganizationComponent } from './organization/organization.component';
     SiteComponent,
     Nested1Component,
     OrganizationComponent,
+    FloorComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [],

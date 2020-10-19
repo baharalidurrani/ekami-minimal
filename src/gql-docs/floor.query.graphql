@@ -1,0 +1,10 @@
+query floor($id: String!) {
+  floor(id: $id) {
+    id
+    name
+    zones {
+      id
+      name
+    }
+  }
+}

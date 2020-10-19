@@ -3,6 +3,7 @@ import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import { SubscriptionResult } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import {
+  FloorQuery,
   OrganizationQuery,
   SiteQuery,
   TestEqualMutation,
@@ -21,5 +22,6 @@ export class GqlCacheService {
   public testRandom$: Observable<ApolloQueryResult<TestRandomQuery>>;
   public testSub$: Observable<SubscriptionResult<TestSubSubscription>>;
   public siteQL$: Observable<ApolloQueryResult<SiteQuery>>;
+  public floor$: Observable<ApolloQueryResult<FloorQuery>>;
   constructor() {}
 }
