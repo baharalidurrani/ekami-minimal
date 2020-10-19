@@ -5,6 +5,7 @@ import { ModulesComponent } from './modules/modules.component';
 import { Nested1Component } from './nested1/nested1.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SiteComponent } from './site/site.component';
+import { ZoneComponent } from './zone/zone.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'floor/:id',
     component: FloorComponent,
+  },
+  {
+    path: 'zone/:id',
+    component: ZoneComponent,
   },
   {
     path: 'mod',

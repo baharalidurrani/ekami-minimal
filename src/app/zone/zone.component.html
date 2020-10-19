@@ -1,0 +1,11 @@
+<div *ngIf="zone">
+  <p>Zone: {{ zone.name }}</p>
+  <ul>
+    <li *ngFor="let d of zone.devices">
+      <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
+        {{ d.name }}</a
+      >
+      {{ d.deviceType.name }}
+    </li>
+  </ul>
+</div>

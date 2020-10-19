@@ -10,6 +10,7 @@ import {
   TestRandomQuery,
   TestSubSubscription,
   UserOrganizationQuery,
+  ZoneQuery,
 } from '../generated/graphql';
 
 @Injectable({
@@ -23,5 +24,6 @@ export class GqlCacheService {
   public testSub$: Observable<SubscriptionResult<TestSubSubscription>>;
   public siteQL$: Observable<ApolloQueryResult<SiteQuery>>;
   public floor$: Observable<ApolloQueryResult<FloorQuery>>;
+  public zone$: Observable<ApolloQueryResult<ZoneQuery>>;
   constructor() {}
 }

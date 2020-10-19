@@ -10,6 +10,7 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { OrganizationComponent } from './organization/organization.component';
 import { FloorComponent } from './floor/floor.component';
+import { ZoneComponent } from './zone/zone.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FloorComponent } from './floor/floor.component';
     Nested1Component,
     OrganizationComponent,
     FloorComponent,
+    ZoneComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [],

@@ -1418,6 +1418,27 @@ export type UserOrganizationQuery = (
   ) }
 );
 
+export type ZoneQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type ZoneQuery = (
+  { __typename?: 'Query' }
+  & { zone: (
+    { __typename?: 'ZoneType' }
+    & Pick<ZoneType, 'id' | 'name'>
+    & { devices?: Maybe<Array<(
+      { __typename?: 'DeviceType' }
+      & Pick<DeviceType, 'mac' | 'name'>
+      & { deviceType?: Maybe<(
+        { __typename?: 'DeviceTypeType' }
+        & Pick<DeviceTypeType, 'id' | 'name'>
+      )> }
+    )>> }
+  ) }
+);
+
 export const CamsDocument = gql`
     query cams {
   cams {
@@ -1590,6 +1611,33 @@ export const UserOrganizationDocument = gql`
   })
   export class UserOrganizationGQL extends Apollo.Query<UserOrganizationQuery, UserOrganizationQueryVariables> {
     document = UserOrganizationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ZoneDocument = gql`
+    query zone($id: String!) {
+  zone(id: $id) {
+    id
+    name
+    devices {
+      mac
+      name
+      deviceType {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ZoneGQL extends Apollo.Query<ZoneQuery, ZoneQueryVariables> {
+    document = ZoneDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

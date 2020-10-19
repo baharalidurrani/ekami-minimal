@@ -1,0 +1,14 @@
+query zone($id: String!) {
+  zone(id: $id) {
+    id
+    name
+    devices {
+      mac
+      name
+      deviceType {
+        id
+        name
+      }
+    }
+  }
+}
