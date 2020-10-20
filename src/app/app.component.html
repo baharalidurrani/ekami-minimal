@@ -8,10 +8,11 @@
     <li>
       <a routerLink="mod" routerLinkActive="active">Modules</a>
     </li>
+    <li>
+      <a routerLink="exp" routerLinkActive="active">Explorer</a>
+    </li>
     <li *ngIf="user">
-      <a
-        routerLink="org/{{ user.organization.id }}"
-        routerLinkActive="active"
+      <a routerLink="org/{{ user.organization.id }}" routerLinkActive="active"
         >Organization</a
       >
     </li>

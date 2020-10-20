@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ExplorerComponent } from './explorer/explorer.component';
 import { FloorComponent } from './floor/floor.component';
 import { ModulesComponent } from './modules/modules.component';
 import { Nested1Component } from './nested1/nested1.component';
@@ -8,6 +9,10 @@ import { SiteComponent } from './site/site.component';
 import { ZoneComponent } from './zone/zone.component';
 
 const routes: Routes = [
+  {
+    path: 'exp',
+    component: ExplorerComponent,
+  },
   {
     path: 'org/:id',
     component: OrganizationComponent,

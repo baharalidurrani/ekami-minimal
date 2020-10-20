@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { OrganizationComponent } from './organization/organization.component';
 import { FloorComponent } from './floor/floor.component';
 import { ZoneComponent } from './zone/zone.component';
+import { ExplorerComponent } from './explorer/explorer.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ZoneComponent } from './zone/zone.component';
     OrganizationComponent,
     FloorComponent,
     ZoneComponent,
+    ExplorerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [],
