@@ -1412,6 +1412,18 @@ export type UserOrganizationQuery = (
         & { floors?: Maybe<Array<(
           { __typename?: 'FloorType' }
           & Pick<FloorType, 'id' | 'name'>
+          & { zones?: Maybe<Array<(
+            { __typename?: 'ZoneType' }
+            & Pick<ZoneType, 'id' | 'name'>
+            & { devices?: Maybe<Array<(
+              { __typename?: 'DeviceType' }
+              & Pick<DeviceType, 'mac' | 'name'>
+              & { deviceType?: Maybe<(
+                { __typename?: 'DeviceTypeType' }
+                & Pick<DeviceTypeType, 'id' | 'name'>
+              )> }
+            )>> }
+          )>> }
         )>> }
       )>> }
     )> }
@@ -1599,6 +1611,18 @@ export const UserOrganizationDocument = gql`
         floors {
           id
           name
+          zones {
+            id
+            name
+            devices {
+              mac
+              name
+              deviceType {
+                id
+                name
+              }
+            }
+          }
         }
       }
     }

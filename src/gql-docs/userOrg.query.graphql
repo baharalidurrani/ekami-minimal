@@ -13,6 +13,18 @@ query userOrganization {
         floors {
           id
           name
+          zones {
+            id
+            name
+            devices {
+              mac
+              name
+              deviceType {
+                id
+                name
+              }
+            }
+          }
         }
       }
     }
