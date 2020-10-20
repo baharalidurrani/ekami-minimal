@@ -19,11 +19,11 @@ export class DeviceComponent implements OnInit, OnDestroy {
     console.log('%cdevice.component.ts line:19 mac', 'color: #007acc;', mac);
     this.deviceQL$ = this.deviceQL.fetch({ mac }, { errorPolicy: 'all' });
     this.deviceQLSub = this.deviceQL$.subscribe((result) => {
-      console.log('%cdevice.component.ts line:22 s', 'color: #007acc;', result);
+      this.device = result.data.device;
       console.log(
-        '%cdevice.component.ts line:22 this.device',
+        '%cdevice.component.ts line:22 result.data.device.mac',
         'color: #007acc;',
-        this.device
+        this.device.mac
       );
     });
   }
