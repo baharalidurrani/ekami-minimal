@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { UserOrganizationGQL, UserType } from '../generated/graphql';
-import { GqlCacheService } from './gql-cache.service';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { Observable, Subscription } from 'rxjs';
+import {
+  UserOrganizationGQL,
+  UserOrganizationQuery,
+  UserType,
+} from '../generated/graphql';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +13,13 @@ import { GqlCacheService } from './gql-cache.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  constructor(
-    private gc: GqlCacheService,
-    private userOrg: UserOrganizationGQL
-  ) {}
+  constructor(private userOrg: UserOrganizationGQL) {}
+  userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
   user: UserType;
   userOrgSub: Subscription;
   ngOnInit(): void {
-    this.gc.userOrg$ = this.userOrg.fetch();
-    this.userOrgSub = this.gc.userOrg$.subscribe((result) => {
+    this.userOrg$ = this.userOrg.fetch();
+    this.userOrgSub = this.userOrg$.subscribe((result) => {
       this.user = result.data.userOrganization;
       console.log(
         '%capp.component.ts onInit userOrg',
