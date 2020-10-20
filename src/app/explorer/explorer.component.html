@@ -1,9 +1,10 @@
 <div *ngIf="user">
   <ul>
     <li *ngFor="let site of user.organization.sites">
-      <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
-        {{ site.name }}</a
-      >
+      <button (click)="onClickHandler(site)">{{ site.name }}</button>
     </li>
   </ul>
+  <div *ngIf="selectedSite">
+    <app-site [site]="selectedSite"></app-site>
+  </div>
 </div>

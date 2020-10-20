@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
+  SiteType,
   UserOrganizationGQL,
   UserOrganizationQuery,
   UserType,
@@ -17,6 +18,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
   userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
   user: UserType;
   userOrgSub: Subscription;
+  selectedSite: SiteType;
   ngOnInit(): void {
     this.userOrg$ = this.userOrg.fetch();
     this.userOrgSub = this.userOrg$.subscribe((result) => {
@@ -27,6 +29,10 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         this.user
       );
     });
+  }
+  onClickHandler(site: SiteType) {
+    if (this.selectedSite) this.selectedSite = null;
+    else this.selectedSite = site;
   }
   ngOnDestroy() {
     this.userOrgSub.unsubscribe();
