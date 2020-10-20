@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
-import { SiteGQL, SiteQuery, SiteType } from 'src/generated/graphql';
+import { SiteGQL, SiteQuery, SiteType } from '../../generated/graphql';
 
 @Component({
   selector: 'app-site',

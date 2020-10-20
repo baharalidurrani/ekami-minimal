@@ -5,7 +5,7 @@ import {
   UserOrganizationGQL,
   UserOrganizationQuery,
   UserType,
-} from 'src/generated/graphql';
+} from '../../generated/graphql';
 
 @Component({
   selector: 'app-explorer',

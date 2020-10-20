@@ -1,1 +1,9 @@
-<p>explorer works!</p>
+<div *ngIf="user">
+  <ul>
+    <li *ngFor="let site of user.organization.sites">
+      <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
+        {{ site.name }}</a
+      >
+    </li>
+  </ul>
+</div>

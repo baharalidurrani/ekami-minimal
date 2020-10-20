@@ -12,6 +12,7 @@ import { OrganizationComponent } from './organization/organization.component';
 import { FloorComponent } from './floor/floor.component';
 import { ZoneComponent } from './zone/zone.component';
 import { ExplorerComponent } from './explorer/explorer.component';
+import { DeviceComponent } from './device/device.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ExplorerComponent } from './explorer/explorer.component';
     FloorComponent,
     ZoneComponent,
     ExplorerComponent,
+    DeviceComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
   providers: [],

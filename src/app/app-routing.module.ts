@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DeviceComponent } from './device/device.component';
 import { ExplorerComponent } from './explorer/explorer.component';
 import { FloorComponent } from './floor/floor.component';
 import { ModulesComponent } from './modules/modules.component';
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'zone/:id',
     component: ZoneComponent,
+  },
+  {
+    path: 'device/:mac',
+    component: DeviceComponent,
   },
   {
     path: 'mod',

@@ -1317,6 +1317,23 @@ export type CamsQuery = (
   )> }
 );
 
+export type DeviceQueryVariables = Exact<{
+  mac: Scalars['String'];
+}>;
+
+
+export type DeviceQuery = (
+  { __typename?: 'Query' }
+  & { device: (
+    { __typename?: 'DeviceType' }
+    & Pick<DeviceType, 'mac' | 'name' | 'lwtStatus' | 'mqtt_topic' | 'power_on_state' | 'voltage_monitor'>
+    & { deviceType?: Maybe<(
+      { __typename?: 'DeviceTypeType' }
+      & Pick<DeviceTypeType, 'id' | 'name'>
+    )> }
+  ) }
+);
+
 export type FloorQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1465,6 +1482,33 @@ export const CamsDocument = gql`
   })
   export class CamsGQL extends Apollo.Query<CamsQuery, CamsQueryVariables> {
     document = CamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeviceDocument = gql`
+    query device($mac: String!) {
+  device(mac: $mac) {
+    mac
+    name
+    deviceType {
+      id
+      name
+    }
+    lwtStatus
+    mqtt_topic
+    power_on_state
+    voltage_monitor
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeviceGQL extends Apollo.Query<DeviceQuery, DeviceQueryVariables> {
+    document = DeviceDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
