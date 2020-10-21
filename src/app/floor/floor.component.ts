@@ -1,8 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
-import { FloorGQL, FloorQuery, FloorType } from '../../generated/graphql';
+import {
+  FloorGQL,
+  FloorQuery,
+  FloorType,
+  ZoneType,
+} from '../../generated/graphql';
 
 @Component({
   selector: 'app-floor',
@@ -12,24 +17,32 @@ import { FloorGQL, FloorQuery, FloorType } from '../../generated/graphql';
 export class FloorComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private floorQL: FloorGQL) {}
 
+  @Input() floor?: FloorType;
   floorSub: Subscription;
-  floor: FloorType;
   floor$: Observable<ApolloQueryResult<FloorQuery>>;
+  selectedZone: ZoneType;
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    console.log('%cfloor.component.ts line:14 floor ID', 'color: #007acc;', id);
-    this.floor$ = this.floorQL.fetch({ id });
-    this.floorSub = this.floor$.subscribe((f) => {
-      this.floor = f.data.floor;
-      console.log(
-        '%cfloor.component.ts line:25 floor',
-        'color: #007acc;',
-        this.floor
-      );
-    });
+    if (id) {
+      this.floor$ = this.floorQL.fetch({ id });
+      this.floorSub = this.floor$.subscribe((f) => {
+        this.floor = f.data.floor;
+        console.log(
+          '%cfloor.component.ts line:25 floor',
+          'color: #007acc;',
+          this.floor
+        );
+      });
+    }
   }
+
+  expandZone(zone: ZoneType) {
+    if (this.selectedZone) this.selectedZone = null;
+    else this.selectedZone = zone;
+  }
+
   ngOnDestroy() {
-    this.floorSub.unsubscribe();
+    if (this.floorSub) this.floorSub.unsubscribe();
   }
 }

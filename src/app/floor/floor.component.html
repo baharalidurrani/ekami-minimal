@@ -1,10 +1,15 @@
 <div *ngIf="floor">
   <p>Floor: {{ floor.name }}</p>
   <ul>
+    <strong>Zone List:</strong>
     <li *ngFor="let zone of floor.zones">
       <a routerLink="/zone/{{ zone.id }}" routerLinkActive="active">
-        {{ zone.name }}</a
-      >
+        {{ zone.name }}
+      </a>
+      <button (click)="expandZone(zone)">Expand</button>
     </li>
+    <div *ngIf="selectedZone">
+      <app-zone [zone]="selectedZone"></app-zone>
+    </div>
   </ul>
 </div>

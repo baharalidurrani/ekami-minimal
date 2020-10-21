@@ -1,10 +1,15 @@
 <div *ngIf="site">
   <p>Site: {{ site.name }}</p>
   <ul>
+    <strong>Floor List:</strong>
     <li *ngFor="let floor of site.floors">
-      <a routerLink="/floor/{{ floor.id }}" routerLinkActive="active">
-        {{ floor.name }}</a
-      >
+      <a routerLink="/floor/{{ floor.id }}" routerLinkActive="active">{{
+        floor.name
+      }}</a>
+      <button (click)="expandFloor(floor)">Expand</button>
     </li>
+    <div *ngIf="selectedFloor">
+      <app-floor [floor]="selectedFloor"></app-floor>
+    </div>
   </ul>
 </div>

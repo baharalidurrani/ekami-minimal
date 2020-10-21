@@ -1,6 +1,7 @@
 <div *ngIf="zone">
   <p>Zone: {{ zone.name }}</p>
   <ul>
+    <strong>Device List:</strong>
     <li *ngFor="let d of zone.devices">
       <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
         {{ d.name }}</a

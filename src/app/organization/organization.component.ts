@@ -6,6 +6,7 @@ import {
   OrganizationGQL,
   OrganizationQuery,
   OrganizationType,
+  SiteType,
 } from '../../generated/graphql';
 
 @Component({
@@ -14,11 +15,12 @@ import {
   styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
+  constructor(private route: ActivatedRoute, private orgQL: OrganizationGQL) {}
+
   org: OrganizationType;
   orgQLSub: Subscription;
   orgQL$: Observable<ApolloQueryResult<OrganizationQuery>>;
-
-  constructor(private route: ActivatedRoute, private orgQL: OrganizationGQL) {}
+  selectedSite: SiteType;
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
@@ -32,6 +34,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       );
     });
   }
+
+  expandSite(site: SiteType) {
+    if (this.selectedSite) this.selectedSite = null;
+    else this.selectedSite = site;
+  }
+
   ngOnDestroy() {
     this.orgQLSub.unsubscribe();
   }

@@ -2,10 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
+  FloorType,
   SiteType,
   UserOrganizationGQL,
   UserOrganizationQuery,
   UserType,
+  ZoneType,
 } from '../../generated/graphql';
 
 @Component({
@@ -15,10 +17,12 @@ import {
 })
 export class ExplorerComponent implements OnInit, OnDestroy {
   constructor(private userOrg: UserOrganizationGQL) {}
+
   userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
   user: UserType;
   userOrgSub: Subscription;
   selectedSite: SiteType;
+
   ngOnInit(): void {
     this.userOrg$ = this.userOrg.fetch();
     this.userOrgSub = this.userOrg$.subscribe((result) => {
@@ -30,10 +34,12 @@ export class ExplorerComponent implements OnInit, OnDestroy {
       );
     });
   }
-  onClickHandler(site: SiteType) {
+
+  expandSite(site: SiteType) {
     if (this.selectedSite) this.selectedSite = null;
     else this.selectedSite = site;
   }
+
   ngOnDestroy() {
     this.userOrgSub.unsubscribe();
   }

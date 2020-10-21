@@ -2,7 +2,12 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
-import { SiteGQL, SiteQuery, SiteType } from '../../generated/graphql';
+import {
+  FloorType,
+  SiteGQL,
+  SiteQuery,
+  SiteType,
+} from '../../generated/graphql';
 
 @Component({
   selector: 'app-site',
@@ -11,9 +16,12 @@ import { SiteGQL, SiteQuery, SiteType } from '../../generated/graphql';
 })
 export class SiteComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private siteQL: SiteGQL) {}
-  siteQLSub: Subscription;
+
   @Input() site?: SiteType;
+  siteQLSub: Subscription;
   siteQL$: Observable<ApolloQueryResult<SiteQuery>>;
+  selectedFloor: FloorType;
+
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
     if (id) {
@@ -25,6 +33,12 @@ export class SiteComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  expandFloor(floor: FloorType) {
+    if (this.selectedFloor) this.selectedFloor = null;
+    else this.selectedFloor = floor;
+  }
+
   ngOnDestroy() {
     if (this.siteQLSub) this.siteQLSub.unsubscribe();
   }

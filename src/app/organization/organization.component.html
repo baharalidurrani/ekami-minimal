@@ -1,10 +1,15 @@
 <div *ngIf="org">
   <p>Org: {{ org.name }}</p>
   <ul>
+    <strong>Site List:</strong>
     <li *ngFor="let site of org.sites">
       <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
-        {{ site.name }}</a
-      >
+        {{ site.name }}
+      </a>
+      <button (click)="expandSite(site)">Expand</button>
     </li>
+    <div *ngIf="selectedSite">
+      <app-site [site]="selectedSite"></app-site>
+    </div>
   </ul>
 </div>
