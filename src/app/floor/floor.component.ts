@@ -23,8 +23,12 @@ export class FloorComponent implements OnInit, OnDestroy {
   selectedZone: ZoneType;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    if (id) {
+    console.log(
+      '%cfloor.component.ts line:26 onInit',
+      'color: white; background-color: #26bfa5;'
+    );
+    if (!this.floor) {
+      const id = this.route.snapshot.params['id'];
       this.floor$ = this.floorQL.fetch({ id });
       this.floorSub = this.floor$.subscribe((f) => {
         this.floor = f.data.floor;

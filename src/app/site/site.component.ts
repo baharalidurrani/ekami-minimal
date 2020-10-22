@@ -23,8 +23,12 @@ export class SiteComponent implements OnInit, OnDestroy {
   selectedFloor: FloorType;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    if (id) {
+    console.log(
+      '%csite.component.ts line:26 onInit',
+      'color: white; background-color: #26bfa5;'
+    );
+    if (!this.site) {
+      const id = this.route.snapshot.params['id'];
       console.log('%csite.component.ts line:14 id', 'color: #007acc;', id);
       this.siteQL$ = this.siteQL.fetch({ id }, { errorPolicy: 'all' });
       this.siteQLSub = this.siteQL$.subscribe((s) => {

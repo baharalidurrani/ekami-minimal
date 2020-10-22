@@ -4,9 +4,13 @@
     <strong>Device List:</strong>
     <li *ngFor="let d of zone.devices">
       <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
-        {{ d.name }}</a
-      >
+        {{ d.name }}
+      </a>
       {{ d.deviceType.name }}
+      <button (click)="expandDevice(d)">Expand</button>
     </li>
+    <div *ngIf="selectedDevice">
+      <app-device [device]="selectedDevice"></app-device>
+    </div>
   </ul>
 </div>

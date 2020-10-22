@@ -5,6 +5,15 @@ query floor($id: String!) {
     zones {
       id
       name
+      devices {
+        mac
+        name
+        mqtt_topic
+        deviceType {
+          id
+          name
+        }
+      }
     }
   }
 }

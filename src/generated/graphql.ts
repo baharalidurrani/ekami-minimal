@@ -1347,8 +1347,43 @@ export type FloorQuery = (
     & { zones?: Maybe<Array<(
       { __typename?: 'ZoneType' }
       & Pick<ZoneType, 'id' | 'name'>
+      & { devices?: Maybe<Array<(
+        { __typename?: 'DeviceType' }
+        & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
+        & { deviceType?: Maybe<(
+          { __typename?: 'DeviceTypeType' }
+          & Pick<DeviceTypeType, 'id' | 'name'>
+        )> }
+      )>> }
     )>> }
   ) }
+);
+
+export type GetThingsLatestLogsQueryVariables = Exact<{
+  macs: Array<Scalars['String']>;
+}>;
+
+
+export type GetThingsLatestLogsQuery = (
+  { __typename?: 'Query' }
+  & { getThingsLatestLogs: Array<(
+    { __typename?: 'ThingLogResultType' }
+    & Pick<ThingLogResultType, 'lwt'>
+    & { sensor?: Maybe<(
+      { __typename?: 'ThingSensorEnergyType' }
+      & Pick<ThingSensorEnergyType, 'Time'>
+      & { ENERGY?: Maybe<(
+        { __typename?: 'ThingEnergyType' }
+        & Pick<ThingEnergyType, 'Current' | 'Voltage' | 'Power'>
+      )> }
+    )>, state?: Maybe<(
+      { __typename?: 'ThingStateType' }
+      & Pick<ThingStateType, 'POWER'>
+    )>, device: (
+      { __typename?: 'DeviceType' }
+      & Pick<DeviceType, 'mac' | 'name'>
+    ) }
+  )> }
 );
 
 export type OrganizationQueryVariables = Exact<{
@@ -1363,7 +1398,23 @@ export type OrganizationQuery = (
     & Pick<OrganizationType, 'id' | 'name' | 'email' | 'website' | 'address' | 'phone' | 'city' | 'country'>
     & { sites?: Maybe<Array<(
       { __typename?: 'SiteType' }
-      & Pick<SiteType, 'id' | 'name' | 'location'>
+      & Pick<SiteType, 'id' | 'name'>
+      & { floors?: Maybe<Array<(
+        { __typename?: 'FloorType' }
+        & Pick<FloorType, 'id' | 'name'>
+        & { zones?: Maybe<Array<(
+          { __typename?: 'ZoneType' }
+          & Pick<ZoneType, 'id' | 'name'>
+          & { devices?: Maybe<Array<(
+            { __typename?: 'DeviceType' }
+            & Pick<DeviceType, 'mac' | 'name'>
+            & { deviceType?: Maybe<(
+              { __typename?: 'DeviceTypeType' }
+              & Pick<DeviceTypeType, 'id' | 'name'>
+            )> }
+          )>> }
+        )>> }
+      )>> }
     )>> }
   ) }
 );
@@ -1381,6 +1432,18 @@ export type SiteQuery = (
     & { floors?: Maybe<Array<(
       { __typename?: 'FloorType' }
       & Pick<FloorType, 'id' | 'name'>
+      & { zones?: Maybe<Array<(
+        { __typename?: 'ZoneType' }
+        & Pick<ZoneType, 'id' | 'name'>
+        & { devices?: Maybe<Array<(
+          { __typename?: 'DeviceType' }
+          & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
+          & { deviceType?: Maybe<(
+            { __typename?: 'DeviceTypeType' }
+            & Pick<DeviceTypeType, 'id' | 'name'>
+          )> }
+        )>> }
+      )>> }
     )>> }
   ) }
 );
@@ -1522,6 +1585,15 @@ export const FloorDocument = gql`
     zones {
       id
       name
+      devices {
+        mac
+        name
+        mqtt_topic
+        deviceType {
+          id
+          name
+        }
+      }
     }
   }
 }
@@ -1532,6 +1604,39 @@ export const FloorDocument = gql`
   })
   export class FloorGQL extends Apollo.Query<FloorQuery, FloorQueryVariables> {
     document = FloorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetThingsLatestLogsDocument = gql`
+    query getThingsLatestLogs($macs: [String!]!) {
+  getThingsLatestLogs(macs: $macs) {
+    sensor {
+      Time
+      ENERGY {
+        Current
+        Voltage
+        Power
+      }
+    }
+    state {
+      POWER
+    }
+    lwt
+    device {
+      mac
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetThingsLatestLogsGQL extends Apollo.Query<GetThingsLatestLogsQuery, GetThingsLatestLogsQueryVariables> {
+    document = GetThingsLatestLogsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1551,7 +1656,22 @@ export const OrganizationDocument = gql`
     sites {
       id
       name
-      location
+      floors {
+        id
+        name
+        zones {
+          id
+          name
+          devices {
+            mac
+            name
+            deviceType {
+              id
+              name
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -1576,6 +1696,19 @@ export const SiteDocument = gql`
     floors {
       id
       name
+      zones {
+        id
+        name
+        devices {
+          mac
+          name
+          mqtt_topic
+          deviceType {
+            id
+            name
+          }
+        }
+      }
     }
   }
 }

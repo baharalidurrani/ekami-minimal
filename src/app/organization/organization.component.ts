@@ -23,6 +23,10 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   selectedSite: SiteType;
 
   ngOnInit() {
+    console.log(
+      '%corganization.component.ts line:26 onInit',
+      'color: white; background-color: #26bfa5;'
+    );
     const id = this.route.snapshot.params['id'];
     this.orgQL$ = this.orgQL.fetch({ id });
     this.orgQLSub = this.orgQL$.subscribe((o) => {
@@ -30,7 +34,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       console.log(
         '%corganization.component.ts onInit organization.name',
         'color: white; background-color: #007acc;',
-        o.data.organization.name
+        o.data.organization
       );
     });
   }

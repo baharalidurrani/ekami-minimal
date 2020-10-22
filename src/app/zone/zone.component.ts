@@ -2,7 +2,12 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
-import { ZoneGQL, ZoneQuery, ZoneType } from '../../generated/graphql';
+import {
+  DeviceType,
+  ZoneGQL,
+  ZoneQuery,
+  ZoneType,
+} from '../../generated/graphql';
 
 @Component({
   selector: 'app-zone',
@@ -15,10 +20,15 @@ export class ZoneComponent implements OnInit, OnDestroy {
   @Input() zone: ZoneType;
   zoneSub: Subscription;
   zone$: Observable<ApolloQueryResult<ZoneQuery>>;
+  selectedDevice: DeviceType;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    if (id) {
+    console.log(
+      '%czone.component.ts line:20 onInit',
+      'color: white; background-color: #26bfa5;'
+    );
+    if (!this.zone) {
+      const id = this.route.snapshot.params['id'];
       this.zone$ = this.zoneQL.fetch({ id });
       this.zoneSub = this.zone$.subscribe((f) => {
         this.zone = f.data.zone;
@@ -29,6 +39,11 @@ export class ZoneComponent implements OnInit, OnDestroy {
         );
       });
     }
+  }
+
+  expandDevice(device: DeviceType) {
+    if (this.selectedDevice) this.selectedDevice = null;
+    else this.selectedDevice = device;
   }
 
   ngOnDestroy() {

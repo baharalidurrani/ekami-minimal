@@ -14,10 +14,16 @@ import {
 })
 export class AppComponent implements OnInit, OnDestroy {
   constructor(private userOrg: UserOrganizationGQL) {}
+
   userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
   user: UserType;
   userOrgSub: Subscription;
+
   ngOnInit(): void {
+    console.log(
+      '%capp.component.ts line:23 onInit',
+      'color: white; background-color: #26bfa5;'
+    );
     this.userOrg$ = this.userOrg.fetch();
     this.userOrgSub = this.userOrg$.subscribe((result) => {
       this.user = result.data.userOrganization;
@@ -28,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     });
   }
+
   ngOnDestroy() {
     this.userOrgSub.unsubscribe();
   }

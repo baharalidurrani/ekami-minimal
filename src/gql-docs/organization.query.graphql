@@ -11,7 +11,22 @@ query organization($id: String!) {
     sites {
       id
       name
-      location
+      floors {
+        id
+        name
+        zones {
+          id
+          name
+          devices {
+            mac
+            name
+            deviceType {
+              id
+              name
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,20 @@
+query getThingsLatestLogs($macs: [String!]!) {
+  getThingsLatestLogs(macs: $macs) {
+    sensor {
+      Time
+      ENERGY {
+        Current
+        Voltage
+        Power
+      }
+    }
+    state {
+      POWER
+    }
+    lwt
+    device {
+      mac
+      name
+    }
+  }
+}

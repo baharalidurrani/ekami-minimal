@@ -24,6 +24,10 @@ export class ExplorerComponent implements OnInit, OnDestroy {
   selectedSite: SiteType;
 
   ngOnInit(): void {
+    console.log(
+      '%cexplorer.component.ts line:27 onInit',
+      'color: white; background-color: #26bfa5;'
+    );
     this.userOrg$ = this.userOrg.fetch();
     this.userOrgSub = this.userOrg$.subscribe((result) => {
       this.user = result.data.userOrganization;
