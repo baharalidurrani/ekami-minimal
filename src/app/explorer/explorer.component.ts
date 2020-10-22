@@ -31,11 +31,6 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     this.userOrg$ = this.userOrg.fetch();
     this.userOrgSub = this.userOrg$.subscribe((result) => {
       this.user = result.data.userOrganization;
-      console.log(
-        '%cexplorer.component.ts line:24 this.user',
-        'color: #007acc;',
-        this.user
-      );
     });
   }
 

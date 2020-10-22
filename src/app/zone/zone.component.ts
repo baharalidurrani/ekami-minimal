@@ -32,11 +32,6 @@ export class ZoneComponent implements OnInit, OnDestroy {
       this.zone$ = this.zoneQL.fetch({ id });
       this.zoneSub = this.zone$.subscribe((f) => {
         this.zone = f.data.zone;
-        console.log(
-          '%czone.component.ts line:25 zone',
-          'color: #007acc;',
-          this.zone
-        );
       });
     }
   }

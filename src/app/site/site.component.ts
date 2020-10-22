@@ -29,7 +29,6 @@ export class SiteComponent implements OnInit, OnDestroy {
     );
     if (!this.site) {
       const id = this.route.snapshot.params['id'];
-      console.log('%csite.component.ts line:14 id', 'color: #007acc;', id);
       this.siteQL$ = this.siteQL.fetch({ id }, { errorPolicy: 'all' });
       this.siteQLSub = this.siteQL$.subscribe((s) => {
         if (s.error || s.errors) throw s.errors;

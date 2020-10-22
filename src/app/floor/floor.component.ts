@@ -32,11 +32,6 @@ export class FloorComponent implements OnInit, OnDestroy {
       this.floor$ = this.floorQL.fetch({ id });
       this.floorSub = this.floor$.subscribe((f) => {
         this.floor = f.data.floor;
-        console.log(
-          '%cfloor.component.ts line:25 floor',
-          'color: #007acc;',
-          this.floor
-        );
       });
     }
   }

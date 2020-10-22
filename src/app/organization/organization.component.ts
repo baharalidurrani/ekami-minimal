@@ -31,11 +31,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.orgQL$ = this.orgQL.fetch({ id });
     this.orgQLSub = this.orgQL$.subscribe((o) => {
       this.org = o.data.organization;
-      console.log(
-        '%corganization.component.ts onInit organization.name',
-        'color: white; background-color: #007acc;',
-        o.data.organization
-      );
     });
   }
 
