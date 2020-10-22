@@ -3,6 +3,6 @@
   <p>Device MAC: {{ device.mac }}</p>
   <p>Device mqtt_topic: {{ device.mqtt_topic }}</p>
   <p>Device Type: {{ device.deviceType.name }}</p>
-  <p>Device Power ON State: {{ device.power_on_state }}</p>
-  <p>Device Voltage Monitor: {{ device.voltage_monitor }}</p>
+  <p>Device Power State: {{ latestLog?.state.POWER }}</p>
+  <p>Device LWT State: {{ latestLog?.lwt }}</p>
 </div>

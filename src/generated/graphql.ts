@@ -1381,7 +1381,7 @@ export type GetThingsLatestLogsQuery = (
       & Pick<ThingStateType, 'POWER'>
     )>, device: (
       { __typename?: 'DeviceType' }
-      & Pick<DeviceType, 'mac' | 'name'>
+      & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
     ) }
   )> }
 );
@@ -1627,6 +1627,7 @@ export const GetThingsLatestLogsDocument = gql`
     device {
       mac
       name
+      mqtt_topic
     }
   }
 }
