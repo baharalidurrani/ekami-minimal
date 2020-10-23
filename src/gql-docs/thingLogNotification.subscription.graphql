@@ -1,0 +1,18 @@
+subscription thingLogNotification($macs: [String!]!) {
+  thingLogNotification(macs: $macs) {
+    device {
+      mac
+    }
+    sensor {
+      ENERGY {
+        Power
+        Voltage
+        Current
+      }
+    }
+    lwt
+    state {
+      POWER
+    }
+  }
+}

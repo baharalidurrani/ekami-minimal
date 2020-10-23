@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
+import { SubscriptionResult } from 'apollo-angular';
 import { Observable, Subscription } from 'rxjs';
 import {
   DeviceGQL,
@@ -8,6 +9,8 @@ import {
   DeviceType,
   GetThingsLatestLogsGQL,
   GetThingsLatestLogsQuery,
+  ThingLogNotificationGQL,
+  ThingLogNotificationSubscription,
   ThingLogResultType,
 } from '../../generated/graphql';
 
@@ -20,7 +23,8 @@ export class DeviceComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private deviceQL: DeviceGQL,
-    private latestLogsQL: GetThingsLatestLogsGQL
+    private latestLogsQL: GetThingsLatestLogsGQL,
+    private logNotification: ThingLogNotificationGQL
   ) {}
 
   @Input() device: DeviceType;
@@ -29,6 +33,11 @@ export class DeviceComponent implements OnInit, OnDestroy {
   latestLog: ThingLogResultType;
   deviceQLSub: Subscription;
   deviceQL$: Observable<ApolloQueryResult<DeviceQuery>>;
+  logNotificationQL$: Observable<
+    SubscriptionResult<ThingLogNotificationSubscription>
+  >;
+  logNotificationSub: Subscription;
+  liveLog: ThingLogResultType;
 
   ngOnInit(): void {
     console.log(
@@ -48,15 +57,18 @@ export class DeviceComponent implements OnInit, OnDestroy {
     });
     this.latestLogSub = this.latestLog$.subscribe((logs) => {
       this.latestLog = logs.data.getThingsLatestLogs[0];
-      console.log(
-        '%cdevice.component.ts line:50 this.latestLog',
-        'color: #007acc;',
-        this.latestLog
-      );
+    });
+
+    this.logNotificationQL$ = this.logNotification.subscribe({
+      macs: [this.device ? this.device.mac : mac],
+    });
+    this.logNotificationSub = this.logNotificationQL$.subscribe((log) => {
+      this.liveLog = log.data.thingLogNotification;
     });
   }
 
   ngOnDestroy() {
     if (this.deviceQLSub) this.deviceQLSub.unsubscribe();
+    if (this.logNotificationSub) this.logNotificationSub.unsubscribe();
   }
 }

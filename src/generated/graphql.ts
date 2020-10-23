@@ -1475,6 +1475,32 @@ export type TestSubSubscription = (
   & Pick<Subscription, 'testSub'>
 );
 
+export type ThingLogNotificationSubscriptionVariables = Exact<{
+  macs: Array<Scalars['String']>;
+}>;
+
+
+export type ThingLogNotificationSubscription = (
+  { __typename?: 'Subscription' }
+  & { thingLogNotification: (
+    { __typename?: 'ThingLogResultType' }
+    & Pick<ThingLogResultType, 'lwt'>
+    & { device: (
+      { __typename?: 'DeviceType' }
+      & Pick<DeviceType, 'mac'>
+    ), sensor?: Maybe<(
+      { __typename?: 'ThingSensorEnergyType' }
+      & { ENERGY?: Maybe<(
+        { __typename?: 'ThingEnergyType' }
+        & Pick<ThingEnergyType, 'Power' | 'Voltage' | 'Current'>
+      )> }
+    )>, state?: Maybe<(
+      { __typename?: 'ThingStateType' }
+      & Pick<ThingStateType, 'POWER'>
+    )> }
+  ) }
+);
+
 export type UserOrganizationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1768,6 +1794,37 @@ export const TestSubDocument = gql`
   })
   export class TestSubGQL extends Apollo.Subscription<TestSubSubscription, TestSubSubscriptionVariables> {
     document = TestSubDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ThingLogNotificationDocument = gql`
+    subscription thingLogNotification($macs: [String!]!) {
+  thingLogNotification(macs: $macs) {
+    device {
+      mac
+    }
+    sensor {
+      ENERGY {
+        Power
+        Voltage
+        Current
+      }
+    }
+    lwt
+    state {
+      POWER
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ThingLogNotificationGQL extends Apollo.Subscription<ThingLogNotificationSubscription, ThingLogNotificationSubscriptionVariables> {
+    document = ThingLogNotificationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
