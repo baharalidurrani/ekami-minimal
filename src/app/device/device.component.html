@@ -7,4 +7,6 @@
     Device Power State: {{ liveLog?.state.POWER || latestLog?.state.POWER }}
   </p>
   <p>Device LWT State: {{ liveLog?.lwt || latestLog?.lwt }}</p>
+  <p>Device Amps: {{ liveLog?.sensor.ENERGY.Current }}</p>
+  <p>Device Voltage: {{ liveLog?.sensor.ENERGY.Voltage }}</p>
 </div>
