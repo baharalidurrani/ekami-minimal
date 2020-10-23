@@ -1,0 +1,7 @@
+query powerCommand($command: String!, $commandType: String!, $mac: String!) {
+  powerCommand(command: $command, commandType: $commandType, mac: $mac) {
+    mac
+    name
+    mqtt_topic
+  }
+}

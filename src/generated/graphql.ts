@@ -1419,6 +1419,21 @@ export type OrganizationQuery = (
   ) }
 );
 
+export type PowerCommandQueryVariables = Exact<{
+  command: Scalars['String'];
+  commandType: Scalars['String'];
+  mac: Scalars['String'];
+}>;
+
+
+export type PowerCommandQuery = (
+  { __typename?: 'Query' }
+  & { powerCommand: (
+    { __typename?: 'DeviceType' }
+    & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
+  ) }
+);
+
 export type SiteQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1709,6 +1724,26 @@ export const OrganizationDocument = gql`
   })
   export class OrganizationGQL extends Apollo.Query<OrganizationQuery, OrganizationQueryVariables> {
     document = OrganizationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const PowerCommandDocument = gql`
+    query powerCommand($command: String!, $commandType: String!, $mac: String!) {
+  powerCommand(command: $command, commandType: $commandType, mac: $mac) {
+    mac
+    name
+    mqtt_topic
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PowerCommandGQL extends Apollo.Query<PowerCommandQuery, PowerCommandQueryVariables> {
+    document = PowerCommandDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

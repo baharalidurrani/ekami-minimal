@@ -1,5 +1,5 @@
 <div *ngIf="device">
-  <p>Device Name: {{ device.name }}</p>
+  <strong>Device Name: {{ device.name }}</strong>
   <p>Device MAC: {{ device.mac }}</p>
   <p>Device mqtt_topic: {{ device.mqtt_topic }}</p>
   <p>Device Type: {{ device.deviceType.name }}</p>
@@ -9,4 +9,10 @@
   <p>Device LWT State: {{ liveLog?.lwt || latestLog?.lwt }}</p>
   <p>Device Amps: {{ liveLog?.sensor.ENERGY.Current }}</p>
   <p>Device Voltage: {{ liveLog?.sensor.ENERGY.Voltage }}</p>
+  <button (click)="sendPowerCommand()">
+    Turn
+    {{
+      (liveLog?.state.POWER || latestLog?.state.POWER) === "ON" ? "OFF" : "ON"
+    }}
+  </button>
 </div>

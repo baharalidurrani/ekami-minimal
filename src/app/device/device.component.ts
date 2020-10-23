@@ -9,6 +9,7 @@ import {
   DeviceType,
   GetThingsLatestLogsGQL,
   GetThingsLatestLogsQuery,
+  PowerCommandGQL,
   ThingLogNotificationGQL,
   ThingLogNotificationSubscription,
   ThingLogResultType,
@@ -24,7 +25,8 @@ export class DeviceComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private deviceQL: DeviceGQL,
     private latestLogsQL: GetThingsLatestLogsGQL,
-    private logNotification: ThingLogNotificationGQL
+    private logNotification: ThingLogNotificationGQL,
+    private powerCmd: PowerCommandGQL
   ) {}
 
   @Input() device: DeviceType;
@@ -65,6 +67,31 @@ export class DeviceComponent implements OnInit, OnDestroy {
     this.logNotificationSub = this.logNotificationQL$.subscribe((log) => {
       this.liveLog = log.data.thingLogNotification;
     });
+  }
+
+  sendPowerCommand() {
+    const powerState = this.liveLog?.state.POWER || this.latestLog?.state.POWER;
+    const sendCommand = powerState === 'ON' ? 'OFF' : 'ON';
+    console.log(
+      '%cdevice.component.ts line:75 sending Command',
+      'color: #007acc;',
+      sendCommand
+    );
+    this.powerCmd
+      .fetch(
+        {
+          command: sendCommand,
+          commandType: 'power',
+          mac: this.device.mac,
+        },
+        { fetchPolicy: 'network-only' }
+      )
+      .subscribe((d) => {
+        console.log(
+          '%cdevice.component.ts line:85 command published',
+          'color: #007acc;'
+        );
+      });
   }
 
   ngOnDestroy() {
