@@ -1,4 +1,4 @@
-# MyApp
+# Angular Apollo-GraphQL Ekami Minimal Client 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.1.
 
@@ -9,6 +9,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Fetch GraphQL Schema and Types
+
+Run `npm run codegen` to fetch all `Queries | Mutations | Subscriptions | Types` available on the backend and Inject them as `root Services`. As mentions in `codegen.yml` file, powered by `graphql-codegen`
 
 ## Build
 
