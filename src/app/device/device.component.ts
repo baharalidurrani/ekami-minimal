@@ -72,12 +72,23 @@ export class DeviceComponent implements OnInit, OnDestroy {
       mac: this.device ? this.device.mac : mac,
     });
     this.latestResultSub = this.latestResult$.subscribe((result) => {
-      this.powerState = JSON.parse(
-        result.data.getDeviceLatestResult[0].payload
-      ).POWER;
+      for (let i = 0; i < result.data.getDeviceLatestResult.length; i++) {
+        const payload = JSON.parse(
+          result.data.getDeviceLatestResult[i].payload
+        );
+        if (payload.POWER) {
+          this.powerState = payload.POWER;
+          break;
+        }
+      }
     });
 
-    this.subscribeLive();
+    this.logNotificationQL$ = this.logNotificationQL.subscribe({
+      macs: [this.device ? this.device.mac : mac],
+    });
+    this.logNotificationSub = this.logNotificationQL$.subscribe((log) => {
+      this.liveLog = log.data.thingLogNotification;
+    });
 
     this.resultNotification$ = this.resultNotificationQL.subscribe({
       macs: [this.device ? this.device.mac : mac],
@@ -94,18 +105,12 @@ export class DeviceComponent implements OnInit, OnDestroy {
 
   sendPowerCommand({ target }: { target: HTMLButtonElement }) {
     target.disabled = true;
-    this.powerState = this.liveLog?.state.POWER;
-    const sendCommand = this.powerState === 'ON' ? 'OFF' : 'ON';
-    console.log(
-      '%cdevice.component.ts line:75 sending Command',
-      'color: #007acc;',
-      sendCommand
-    );
-    if (this.logNotificationSub) this.logNotificationSub.unsubscribe();
     setTimeout(() => {
-      this.subscribeLive();
       target.disabled = false;
     }, 5 * 1000);
+
+    this.powerState = this.liveLog?.state.POWER;
+    const sendCommand = this.powerState === 'ON' ? 'OFF' : 'ON';
     this.powerCmd$ = this.powerCmd.fetch(
       {
         command: sendCommand,
@@ -116,20 +121,8 @@ export class DeviceComponent implements OnInit, OnDestroy {
     );
     this.powerCmdSub = this.powerCmd$.subscribe((d) => {
       console.log(
-        '%cdevice.component.ts line:85 command published on device',
-        'color: #007acc;',
-        d.data.powerCommand.mqtt_topic
+        `${sendCommand} command published on device ${d.data.powerCommand.mqtt_topic}`
       );
-    });
-  }
-
-  subscribeLive() {
-    this.logNotificationQL$ = this.logNotificationQL.subscribe({
-      macs: [this.device ? this.device.mac : this.route.snapshot.params['mac']],
-    });
-    this.logNotificationSub = this.logNotificationQL$.subscribe((log) => {
-      this.liveLog = log.data.thingLogNotification;
-      this.powerState = log.data.thingLogNotification?.state?.POWER;
     });
   }
 
