@@ -92,7 +92,8 @@ export class DeviceComponent implements OnInit, OnDestroy {
     );
   }
 
-  sendPowerCommand() {
+  sendPowerCommand({ target }: { target: HTMLButtonElement }) {
+    target.disabled = true;
     this.powerState = this.liveLog?.state.POWER;
     const sendCommand = this.powerState === 'ON' ? 'OFF' : 'ON';
     console.log(
@@ -103,6 +104,7 @@ export class DeviceComponent implements OnInit, OnDestroy {
     if (this.logNotificationSub) this.logNotificationSub.unsubscribe();
     setTimeout(() => {
       this.subscribeLive();
+      target.disabled = false;
     }, 5 * 1000);
     this.powerCmd$ = this.powerCmd.fetch(
       {
