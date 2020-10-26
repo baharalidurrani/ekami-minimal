@@ -469,7 +469,6 @@ export type CameraType = {
   __typename?: 'CameraType';
   id: Scalars['String'];
   name: Scalars['String'];
-  isIP: Scalars['Boolean'];
   mac?: Maybe<Scalars['String']>;
   ip?: Maybe<Scalars['String']>;
   rtspPort?: Maybe<Scalars['Float']>;
@@ -981,11 +980,6 @@ export type MutationUpdateZoneArgs = {
 };
 
 
-export type MutationRegisterNewClientsArgs = {
-  organizationID: Scalars['String'];
-};
-
-
 export type MutationUpdateDeviceAllTimersArgs = {
   mac: Scalars['String'];
 };
@@ -1334,6 +1328,23 @@ export type DeviceQuery = (
   ) }
 );
 
+export type GetDeviceLatestResultQueryVariables = Exact<{
+  mac: Scalars['String'];
+}>;
+
+
+export type GetDeviceLatestResultQuery = (
+  { __typename?: 'Query' }
+  & { getDeviceLatestResult: Array<(
+    { __typename?: 'DevicePowerPublishResultLog' }
+    & Pick<DevicePowerPublishResultLog, 'payload' | 'createdAt'>
+    & { device?: Maybe<(
+      { __typename?: 'DeviceType' }
+      & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
+    )> }
+  )> }
+);
+
 export type FloorQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1516,6 +1527,23 @@ export type ThingLogNotificationSubscription = (
   ) }
 );
 
+export type ThingResultNotificationSubscriptionVariables = Exact<{
+  macs: Array<Scalars['String']>;
+}>;
+
+
+export type ThingResultNotificationSubscription = (
+  { __typename?: 'Subscription' }
+  & { thingResultNotification: (
+    { __typename?: 'ThingLogTypeString' }
+    & Pick<ThingLogTypeString, 'id' | 'mac' | 'command' | 'payloadJson' | 'activity' | 'lwt'>
+    & { device?: Maybe<(
+      { __typename?: 'DeviceType' }
+      & Pick<DeviceType, 'mac'>
+    )> }
+  ) }
+);
+
 export type UserOrganizationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1613,6 +1641,30 @@ export const DeviceDocument = gql`
   })
   export class DeviceGQL extends Apollo.Query<DeviceQuery, DeviceQueryVariables> {
     document = DeviceDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetDeviceLatestResultDocument = gql`
+    query getDeviceLatestResult($mac: String!) {
+  getDeviceLatestResult(mac: $mac) {
+    device {
+      mac
+      name
+      mqtt_topic
+    }
+    payload
+    createdAt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetDeviceLatestResultGQL extends Apollo.Query<GetDeviceLatestResultQuery, GetDeviceLatestResultQueryVariables> {
+    document = GetDeviceLatestResultDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1860,6 +1912,32 @@ export const ThingLogNotificationDocument = gql`
   })
   export class ThingLogNotificationGQL extends Apollo.Subscription<ThingLogNotificationSubscription, ThingLogNotificationSubscriptionVariables> {
     document = ThingLogNotificationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ThingResultNotificationDocument = gql`
+    subscription thingResultNotification($macs: [String!]!) {
+  thingResultNotification(macs: $macs) {
+    id
+    mac
+    command
+    payloadJson
+    activity
+    lwt
+    device {
+      mac
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ThingResultNotificationGQL extends Apollo.Subscription<ThingResultNotificationSubscription, ThingResultNotificationSubscriptionVariables> {
+    document = ThingResultNotificationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

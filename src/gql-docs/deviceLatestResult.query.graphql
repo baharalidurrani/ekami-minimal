@@ -1,0 +1,11 @@
+query getDeviceLatestResult($mac: String!) {
+  getDeviceLatestResult(mac: $mac) {
+    device {
+      mac
+      name
+      mqtt_topic
+    }
+    payload
+    createdAt
+  }
+}

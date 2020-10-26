@@ -1,0 +1,13 @@
+subscription thingResultNotification($macs: [String!]!) {
+  thingResultNotification(macs: $macs) {
+    id
+    mac
+    command
+    payloadJson
+    activity
+    lwt
+    device {
+      mac
+    }
+  }
+}
