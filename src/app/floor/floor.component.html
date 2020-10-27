@@ -3,10 +3,10 @@
   <ul>
     <strong>Zone List:</strong>
     <li *ngFor="let zone of floor.zones">
+      <button (click)="expandZone(zone)">+/-</button>
       <a routerLink="/zone/{{ zone.id }}" routerLinkActive="active">
         {{ zone.name }}
       </a>
-      <button (click)="expandZone(zone)">Expand</button>
     </li>
     <div *ngIf="selectedZone">
       <app-zone [zone]="selectedZone"></app-zone>
