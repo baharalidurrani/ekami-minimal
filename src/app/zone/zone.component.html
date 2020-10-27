@@ -1,5 +1,10 @@
 <div *ngIf="zone">
-  <p>Zone: {{ zone.name }}</p>
+  <p>
+    Zone: {{ zone.name }}
+    <button mat-raised-button color="primary" (click)="helloClick($event)">
+      Add Device
+    </button>
+  </p>
   <ul>
     <strong>Device List:</strong>
     <li *ngFor="let d of zone.devices">

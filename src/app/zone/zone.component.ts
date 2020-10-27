@@ -41,6 +41,10 @@ export class ZoneComponent implements OnInit, OnDestroy {
     else this.selectedDevice = device;
   }
 
+  helloClick(e){
+    console.log('%czone.component.ts line:45 e', 'color: #007acc;', e);
+  }
+
   ngOnDestroy() {
     if (this.zoneSub) this.zoneSub.unsubscribe();
   }

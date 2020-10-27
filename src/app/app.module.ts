@@ -13,6 +13,8 @@ import { FloorComponent } from './floor/floor.component';
 import { ZoneComponent } from './zone/zone.component';
 import { ExplorerComponent } from './explorer/explorer.component';
 import { DeviceComponent } from './device/device.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,14 @@ import { DeviceComponent } from './device/device.component';
     ExplorerComponent,
     DeviceComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, GraphQLModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    GraphQLModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
