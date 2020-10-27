@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   api: {
-    uriHTTP: `http://127.0.0.1`,
-    uriWSS: `ws://127.0.0.1`,
+    uriHTTP: `http://${window.location.hostname}`,
+    uriWSS: `ws://${window.location.hostname}`,
     port: 4000,
     graphqlEndpoint: `/graphql/ql`,
     graphqlSubscription: `/graphql`,
