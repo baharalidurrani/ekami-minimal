@@ -1,0 +1,17 @@
+nav > ul > li {
+  display: inline-block;
+  /* margin: auto; */
+}
+
+nav > ul > li > a {
+  padding: 10px;
+}
+
+nav > ul {
+  padding: 0;
+}
+
+h1 > a {
+  text-decoration: none;
+  color: #f8f8e5;
+}

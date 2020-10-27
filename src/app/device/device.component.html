@@ -5,7 +5,7 @@
   <p>Device Type: {{ device.deviceType.name }}</p>
   <p>
     Device Power State: {{ powerState }}
-    <button (click)="sendPowerCommand($event)">
+    <button mat-raised-button color="accent" (click)="sendPowerCommand($event)">
       Turn {{ powerState?.toUpperCase() === "ON" ? "OFF" : "ON" }}
     </button>
   </p>

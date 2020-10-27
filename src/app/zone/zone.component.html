@@ -1,14 +1,16 @@
 <div *ngIf="zone">
   <p>
     Zone: {{ zone.name }}
-    <button mat-raised-button color="primary" (click)="helloClick($event)">
+    <button mat-raised-button color="accent" (click)="helloClick($event)">
       Add Device
     </button>
   </p>
   <ul>
     <strong>Device List:</strong>
     <li *ngFor="let d of zone.devices">
-      <button (click)="expandDevice(d)">+/-</button>
+      <button mat-raised-button color="primary" (click)="expandDevice(d)">
+        +/-
+      </button>
       <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
         {{ d.name }}
       </a>

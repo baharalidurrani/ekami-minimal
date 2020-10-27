@@ -3,7 +3,9 @@
   <ul>
     <strong>Site List:</strong>
     <li *ngFor="let site of user.organization.sites">
-      <button (click)="expandSite(site)">+/-</button>
+      <button mat-raised-button color="primary" (click)="expandSite(site)">
+        +/-
+      </button>
       <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
         {{ site.name }}
       </a>
