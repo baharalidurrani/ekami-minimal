@@ -1,15 +1,23 @@
 <div *ngIf="device">
-  <strong>Name: {{ device.name }}</strong>
-  <p>MAC: {{ device.mac }}</p>
-  <p>Type: {{ device.configuredIcon }}</p>
-  <p>
-    Power State: {{ powerState }}
-    <button mat-raised-button color="accent" (click)="sendPowerCommand($event)">
-      Turn {{ powerState?.toUpperCase() === "ON" ? "OFF" : "ON" }}
-    </button>
-  </p>
-  <p>Connection: {{ liveLog?.lwt || "Offline" }}</p>
-  <p>Amps: {{ liveLog?.sensor.ENERGY.Current }}</p>
-  <p>Voltage: {{ liveLog?.sensor.ENERGY.Voltage }}</p>
-  <p>Power: {{ liveLog?.sensor.ENERGY.Power }}</p>
+  <strong>Device: {{ device.name }}</strong>
+  <br />
+  Module: {{ device.mac }}
+  <br />
+  Type: {{ device.configuredIcon }}
+  <br />
+  Power: {{ powerState }}
+  <br />
+  <button mat-raised-button color="accent" (click)="sendPowerCommand($event)">
+    Turn {{ powerState?.toUpperCase() === "ON" ? "OFF" : "ON" }}
+  </button>
+  <br />
+  Connection: {{ liveLog?.lwt || "Offline" }}
+  <br />
+  Voltage:
+  {{ (liveLog?.sensor.ENERGY.Voltage).toString() || "-" }}
+  <br />
+  Power: {{ (liveLog?.sensor.ENERGY.Power).toString() || "-" }}
+  <br />
+  Amps:
+  {{ (liveLog?.sensor.ENERGY.Current).toString() || "-" }}
 </div>

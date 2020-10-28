@@ -37,12 +37,12 @@ const routes: Routes = [
   {
     path: 'mod',
     component: ModulesComponent,
-    children: [
-      {
-        path: 'n1',
-        component: Nested1Component,
-      },
-    ],
+    // children: [
+    //   {
+    //     path: 'n1',
+    //     component: Nested1Component,
+    //   },
+    // ],
   },
 ];
 
