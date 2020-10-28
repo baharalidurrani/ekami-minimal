@@ -9,6 +9,7 @@ query floor($id: String!) {
         mac
         name
         mqtt_topic
+        configuredIcon
         deviceType {
           id
           name

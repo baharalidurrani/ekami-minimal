@@ -1320,7 +1320,7 @@ export type DeviceQuery = (
   { __typename?: 'Query' }
   & { device: (
     { __typename?: 'DeviceType' }
-    & Pick<DeviceType, 'mac' | 'name' | 'lwtStatus' | 'mqtt_topic' | 'power_on_state' | 'voltage_monitor'>
+    & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
     & { deviceType?: Maybe<(
       { __typename?: 'DeviceTypeType' }
       & Pick<DeviceTypeType, 'id' | 'name'>
@@ -1360,7 +1360,7 @@ export type FloorQuery = (
       & Pick<ZoneType, 'id' | 'name'>
       & { devices?: Maybe<Array<(
         { __typename?: 'DeviceType' }
-        & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
+        & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
         & { deviceType?: Maybe<(
           { __typename?: 'DeviceTypeType' }
           & Pick<DeviceTypeType, 'id' | 'name'>
@@ -1418,7 +1418,7 @@ export type OrganizationQuery = (
           & Pick<ZoneType, 'id' | 'name'>
           & { devices?: Maybe<Array<(
             { __typename?: 'DeviceType' }
-            & Pick<DeviceType, 'mac' | 'name'>
+            & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
             & { deviceType?: Maybe<(
               { __typename?: 'DeviceTypeType' }
               & Pick<DeviceTypeType, 'id' | 'name'>
@@ -1463,7 +1463,7 @@ export type SiteQuery = (
         & Pick<ZoneType, 'id' | 'name'>
         & { devices?: Maybe<Array<(
           { __typename?: 'DeviceType' }
-          & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic'>
+          & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
           & { deviceType?: Maybe<(
             { __typename?: 'DeviceTypeType' }
             & Pick<DeviceTypeType, 'id' | 'name'>
@@ -1566,7 +1566,7 @@ export type UserOrganizationQuery = (
             & Pick<ZoneType, 'id' | 'name'>
             & { devices?: Maybe<Array<(
               { __typename?: 'DeviceType' }
-              & Pick<DeviceType, 'mac' | 'name'>
+              & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
               & { deviceType?: Maybe<(
                 { __typename?: 'DeviceTypeType' }
                 & Pick<DeviceTypeType, 'id' | 'name'>
@@ -1591,7 +1591,7 @@ export type ZoneQuery = (
     & Pick<ZoneType, 'id' | 'name'>
     & { devices?: Maybe<Array<(
       { __typename?: 'DeviceType' }
-      & Pick<DeviceType, 'mac' | 'name'>
+      & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
       & { deviceType?: Maybe<(
         { __typename?: 'DeviceTypeType' }
         & Pick<DeviceTypeType, 'id' | 'name'>
@@ -1624,14 +1624,12 @@ export const DeviceDocument = gql`
   device(mac: $mac) {
     mac
     name
+    mqtt_topic
+    configuredIcon
     deviceType {
       id
       name
     }
-    lwtStatus
-    mqtt_topic
-    power_on_state
-    voltage_monitor
   }
 }
     `;
@@ -1682,6 +1680,7 @@ export const FloorDocument = gql`
         mac
         name
         mqtt_topic
+        configuredIcon
         deviceType {
           id
           name
@@ -1759,6 +1758,8 @@ export const OrganizationDocument = gql`
           devices {
             mac
             name
+            mqtt_topic
+            configuredIcon
             deviceType {
               id
               name
@@ -1817,6 +1818,7 @@ export const SiteDocument = gql`
           mac
           name
           mqtt_topic
+          configuredIcon
           deviceType {
             id
             name
@@ -1965,6 +1967,8 @@ export const UserOrganizationDocument = gql`
             devices {
               mac
               name
+              mqtt_topic
+              configuredIcon
               deviceType {
                 id
                 name
@@ -1996,6 +2000,8 @@ export const ZoneDocument = gql`
     devices {
       mac
       name
+      mqtt_topic
+      configuredIcon
       deviceType {
         id
         name

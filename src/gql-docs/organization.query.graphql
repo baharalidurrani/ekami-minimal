@@ -20,6 +20,8 @@ query organization($id: String!) {
           devices {
             mac
             name
+            mqtt_topic
+            configuredIcon
             deviceType {
               id
               name

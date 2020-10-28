@@ -2,13 +2,11 @@ query device($mac: String!) {
   device(mac: $mac) {
     mac
     name
+    mqtt_topic
+    configuredIcon
     deviceType {
       id
       name
     }
-    lwtStatus
-    mqtt_topic
-    power_on_state
-    voltage_monitor
   }
 }

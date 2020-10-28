@@ -121,7 +121,7 @@ export class DeviceComponent implements OnInit, OnDestroy {
     );
     this.powerCmdSub = this.powerCmd$.subscribe((d) => {
       console.log(
-        `${sendCommand} command published on device ${d.data.powerCommand.mqtt_topic}`
+        `${sendCommand} command published on device ${this.device.mac}/${d.data.powerCommand.mqtt_topic}`
       );
     });
   }

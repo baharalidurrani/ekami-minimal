@@ -1,16 +1,15 @@
 <div *ngIf="device">
-  <strong>Device Name: {{ device.name }}</strong>
-  <p>Device MAC: {{ device.mac }}</p>
-  <p>Device mqtt_topic: {{ device.mqtt_topic }}</p>
-  <p>Device Type: {{ device.deviceType.name }}</p>
+  <strong>Name: {{ device.name }}</strong>
+  <p>MAC: {{ device.mac }}</p>
+  <p>Type: {{ device.configuredIcon }}</p>
   <p>
-    Device Power State: {{ powerState }}
+    Power State: {{ powerState }}
     <button mat-raised-button color="accent" (click)="sendPowerCommand($event)">
       Turn {{ powerState?.toUpperCase() === "ON" ? "OFF" : "ON" }}
     </button>
   </p>
-  <p>Device LWT State: {{ liveLog?.lwt || "Offline" }}</p>
-  <p>Device Amps: {{ liveLog?.sensor.ENERGY.Current }}</p>
-  <p>Device Voltage: {{ liveLog?.sensor.ENERGY.Voltage }}</p>
-  <p>Device Power: {{ liveLog?.sensor.ENERGY.Power }}</p>
+  <p>Connection: {{ liveLog?.lwt || "Offline" }}</p>
+  <p>Amps: {{ liveLog?.sensor.ENERGY.Current }}</p>
+  <p>Voltage: {{ liveLog?.sensor.ENERGY.Voltage }}</p>
+  <p>Power: {{ liveLog?.sensor.ENERGY.Power }}</p>
 </div>

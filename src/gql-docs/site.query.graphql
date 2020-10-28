@@ -13,6 +13,7 @@ query site($id: String!) {
           mac
           name
           mqtt_topic
+          configuredIcon
           deviceType {
             id
             name
