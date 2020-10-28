@@ -4,7 +4,7 @@ import { DeviceComponent } from './device/device.component';
 import { ExplorerComponent } from './explorer/explorer.component';
 import { FloorComponent } from './floor/floor.component';
 import { ModulesComponent } from './modules/modules.component';
-import { Nested1Component } from './nested1/nested1.component';
+import { UnregisteredComponent } from './unregistered/unregistered.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SiteComponent } from './site/site.component';
 import { ZoneComponent } from './zone/zone.component';
@@ -37,12 +37,12 @@ const routes: Routes = [
   {
     path: 'mod',
     component: ModulesComponent,
-    // children: [
-    //   {
-    //     path: 'n1',
-    //     component: Nested1Component,
-    //   },
-    // ],
+    children: [
+      {
+        path: 'unregistered',
+        component: UnregisteredComponent,
+      },
+    ],
   },
 ];
 

@@ -1,0 +1,8 @@
+query brokerUnregisteredClients {
+  brokerUnregisteredClients {
+    mac
+    topic
+    seen
+    active
+  }
+}

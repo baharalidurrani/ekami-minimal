@@ -1544,6 +1544,17 @@ export type ThingResultNotificationSubscription = (
   ) }
 );
 
+export type BrokerUnregisteredClientsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BrokerUnregisteredClientsQuery = (
+  { __typename?: 'Query' }
+  & { brokerUnregisteredClients: Array<(
+    { __typename?: 'BrokerDeviceType' }
+    & Pick<BrokerDeviceType, 'mac' | 'topic' | 'seen' | 'active'>
+  )> }
+);
+
 export type UserOrganizationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1940,6 +1951,27 @@ export const ThingResultNotificationDocument = gql`
   })
   export class ThingResultNotificationGQL extends Apollo.Subscription<ThingResultNotificationSubscription, ThingResultNotificationSubscriptionVariables> {
     document = ThingResultNotificationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const BrokerUnregisteredClientsDocument = gql`
+    query brokerUnregisteredClients {
+  brokerUnregisteredClients {
+    mac
+    topic
+    seen
+    active
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class BrokerUnregisteredClientsGQL extends Apollo.Query<BrokerUnregisteredClientsQuery, BrokerUnregisteredClientsQueryVariables> {
+    document = BrokerUnregisteredClientsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

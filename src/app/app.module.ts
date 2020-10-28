@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ModulesComponent } from './modules/modules.component';
 import { SiteComponent } from './site/site.component';
-import { Nested1Component } from './nested1/nested1.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { OrganizationComponent } from './organization/organization.component';
@@ -16,18 +15,19 @@ import { DeviceComponent } from './device/device.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { UnregisteredComponent } from './unregistered/unregistered.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModulesComponent,
     SiteComponent,
-    Nested1Component,
     OrganizationComponent,
     FloorComponent,
     ZoneComponent,
     ExplorerComponent,
     DeviceComponent,
+    UnregisteredComponent,
   ],
   imports: [
     BrowserModule,

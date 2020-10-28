@@ -1,0 +1,18 @@
+<h3>
+  Unregistered Clients
+  <button mat-icon-button color="accent">
+    <mat-icon>sync</mat-icon>
+  </button>
+</h3>
+<ul>
+  <li *ngFor="let client of clients">
+    <hr />
+    {{ client.topic }}
+    <br />
+    {{ client.mac }}
+    <br />
+    {{ client.seen }}
+    <br />
+    {{ client.active }}
+  </li>
+</ul>
