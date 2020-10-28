@@ -3,8 +3,10 @@
   <ul>
     <strong>Floor List:</strong>
     <li *ngFor="let floor of site.floors">
-      <button mat-raised-button color="primary" (click)="expandFloor(floor)">
-        +/-
+      <button mat-icon-button color="accent" (click)="expandFloor(floor)">
+        <mat-icon>{{
+          selectedFloor ? "expand_less" : "expand_more"
+        }}</mat-icon>
       </button>
       <a routerLink="/floor/{{ floor.id }}" routerLinkActive="active">{{
         floor.name

@@ -3,8 +3,8 @@
   <ul>
     <strong>Site List:</strong>
     <li *ngFor="let site of user.organization.sites">
-      <button mat-raised-button color="primary" (click)="expandSite(site)">
-        +/-
+      <button mat-icon-button color="accent" (click)="expandSite(site)">
+        <mat-icon>{{ selectedSite ? "expand_less" : "expand_more" }}</mat-icon>
       </button>
       <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
         {{ site.name }}

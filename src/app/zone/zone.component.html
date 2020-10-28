@@ -8,8 +8,10 @@
   <ul>
     <strong>Device List:</strong>
     <li *ngFor="let d of zone.devices">
-      <button mat-raised-button color="primary" (click)="expandDevice(d)">
-        +/-
+      <button mat-icon-button color="accent" (click)="expandDevice(d)">
+        <mat-icon>{{
+          selectedDevice ? "expand_less" : "expand_more"
+        }}</mat-icon>
       </button>
       <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
         {{ d.name }}

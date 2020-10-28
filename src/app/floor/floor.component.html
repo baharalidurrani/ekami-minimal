@@ -3,8 +3,8 @@
   <ul>
     <strong>Zone List:</strong>
     <li *ngFor="let zone of floor.zones">
-      <button mat-raised-button color="primary" (click)="expandZone(zone)">
-        +/-
+      <button mat-icon-button color="accent" (click)="expandZone(zone)">
+        <mat-icon>{{ selectedZone ? "expand_less" : "expand_more" }}</mat-icon>
       </button>
       <a routerLink="/zone/{{ zone.id }}" routerLinkActive="active">
         {{ zone.name }}
