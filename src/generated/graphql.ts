@@ -1345,6 +1345,17 @@ export type GetDeviceLatestResultQuery = (
   )> }
 );
 
+export type DevicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DevicesQuery = (
+  { __typename?: 'Query' }
+  & { devices: Array<(
+    { __typename?: 'DeviceType' }
+    & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon' | 'is_configured'>
+  )> }
+);
+
 export type FloorQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1674,6 +1685,28 @@ export const GetDeviceLatestResultDocument = gql`
   })
   export class GetDeviceLatestResultGQL extends Apollo.Query<GetDeviceLatestResultQuery, GetDeviceLatestResultQueryVariables> {
     document = GetDeviceLatestResultDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DevicesDocument = gql`
+    query devices {
+  devices {
+    mac
+    name
+    mqtt_topic
+    configuredIcon
+    is_configured
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DevicesGQL extends Apollo.Query<DevicesQuery, DevicesQueryVariables> {
+    document = DevicesDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

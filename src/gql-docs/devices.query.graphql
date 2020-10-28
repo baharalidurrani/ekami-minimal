@@ -1,0 +1,9 @@
+query devices {
+  devices {
+    mac
+    name
+    mqtt_topic
+    configuredIcon
+    is_configured
+  }
+}

@@ -8,6 +8,7 @@ import { UnregisteredComponent } from './unregistered/unregistered.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SiteComponent } from './site/site.component';
 import { ZoneComponent } from './zone/zone.component';
+import { AvailableComponent } from './available/available.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'unregistered',
         component: UnregisteredComponent,
+      },
+      {
+        path: 'available',
+        component: AvailableComponent,
       },
     ],
   },

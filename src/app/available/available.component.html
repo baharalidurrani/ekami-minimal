@@ -1,0 +1,20 @@
+<h3>
+  Available Modules
+  <button mat-icon-button color="accent" (click)="syncClients($event)">
+    <mat-icon>sync</mat-icon>
+  </button>
+</h3>
+<ul>
+  <li *ngFor="let d of devices">
+    <hr />
+    {{ d.name }}
+    <br />
+    {{ d.mac }}
+    <br />
+    {{ d.mqtt_topic }}
+    <br />
+    {{ d.is_configured }}
+    <br />
+    {{ d.configuredIcon }}
+  </li>
+</ul>
