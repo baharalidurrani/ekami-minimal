@@ -11,3 +11,6 @@ body {
 a {
   color: #946ac8;
 }
+ul {
+  list-style-type: none;
+}

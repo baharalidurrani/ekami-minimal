@@ -9,9 +9,9 @@
     <strong>Device List:</strong>
     <li *ngFor="let d of zone.devices">
       <button mat-icon-button color="accent" (click)="expandDevice(d)">
-        <mat-icon>{{
-          selectedDevice ? "expand_less" : "expand_more"
-        }}</mat-icon>
+        <mat-icon>
+          {{ selectedDevice ? "expand_less" : "expand_more" }}
+        </mat-icon>
       </button>
       <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
         {{ d.name }}
