@@ -710,6 +710,7 @@ export type BrokerDeviceType = {
   topic: Scalars['String'];
   seen: Scalars['DateTime'];
   active: Scalars['Boolean'];
+  lwt: Scalars['String'];
 };
 
 export type ThingLogResultType = ThingLogResult & {
@@ -1587,7 +1588,7 @@ export type BrokerUnregisteredClientsQuery = (
   { __typename?: 'Query' }
   & { brokerUnregisteredClients: Array<(
     { __typename?: 'BrokerDeviceType' }
-    & Pick<BrokerDeviceType, 'mac' | 'topic' | 'seen' | 'active'>
+    & Pick<BrokerDeviceType, 'mac' | 'topic' | 'seen' | 'active' | 'lwt'>
   )> }
 );
 
@@ -2048,6 +2049,7 @@ export const BrokerUnregisteredClientsDocument = gql`
     topic
     seen
     active
+    lwt
   }
 }
     `;

@@ -4,5 +4,6 @@ query brokerUnregisteredClients {
     topic
     seen
     active
+    lwt
   }
 }
