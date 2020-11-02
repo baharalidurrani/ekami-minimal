@@ -37,6 +37,7 @@ export type Query = {
   currentMonthPowerLogsForFloor: ThingEnergyType;
   getInterlockingRule: InterlockingRulesType;
   getAllInterlockingRules: Array<InterlockingRulesType>;
+  deviceInterlockingRules: Array<InterlockingRulesType>;
   cam: CameraType;
   cams: Array<CameraType>;
   organizations: Array<OrganizationType>;
@@ -169,6 +170,11 @@ export type QueryCurrentMonthPowerLogsForFloorArgs = {
 
 export type QueryGetInterlockingRuleArgs = {
   ruleID: Scalars['String'];
+};
+
+
+export type QueryDeviceInterlockingRulesArgs = {
+  mac: Scalars['String'];
 };
 
 
@@ -1353,6 +1359,10 @@ export type DevicesQuery = (
   & { devices: Array<(
     { __typename?: 'DeviceType' }
     & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon' | 'is_configured'>
+    & { deviceType?: Maybe<(
+      { __typename?: 'DeviceTypeType' }
+      & Pick<DeviceTypeType, 'id' | 'name'>
+    )> }
   )> }
 );
 
@@ -1698,6 +1708,10 @@ export const DevicesDocument = gql`
     mqtt_topic
     configuredIcon
     is_configured
+    deviceType {
+      id
+      name
+    }
   }
 }
     `;

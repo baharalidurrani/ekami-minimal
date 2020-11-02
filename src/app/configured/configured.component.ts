@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import { DevicesGQL, DevicesQuery, DeviceType } from '../../generated/graphql';
 
 @Component({
-  selector: 'app-available',
-  templateUrl: './available.component.html',
-  styleUrls: ['./available.component.css'],
+  selector: 'app-configured',
+  templateUrl: './configured.component.html',
+  styleUrls: ['./configured.component.css'],
 })
-export class AvailableComponent implements OnInit, OnDestroy {
+export class ConfiguredComponent implements OnInit {
   devices$: Observable<ApolloQueryResult<DevicesQuery>>;
   devicesSub: Subscription;
   devices: DeviceType[];
@@ -17,16 +17,13 @@ export class AvailableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log(
-      '%cavailable.component.ts line:19 ngOnInit',
+      '%cconfigured.component.ts line:19 ngOnInit',
       'color: white; background-color: #26bfa5;'
     );
     this.devices$ = this.devicesQL.fetch();
     this.devicesSub = this.devices$.subscribe((r) => {
-      this.devices = r.data.devices.filter((d) => !d.is_configured);
+      this.devices = r.data.devices.filter((d) => d.is_configured);
     });
-  }
-  syncClients(e) {
-    console.log('%cavailable.component.ts line:15 e', 'color: #007acc;', e);
   }
   ngOnDestroy() {
     if (this.devicesSub) this.devicesSub.unsubscribe();

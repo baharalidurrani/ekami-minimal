@@ -1,0 +1,13 @@
+<h3>Configured Modules</h3>
+<ul>
+  <li *ngFor="let d of devices">
+    <hr />
+    {{ d.configuredIcon }}
+    <br />
+    {{ d.name }}
+    <br />
+    {{ d.mac }}
+    <br />
+    {{ d.mqtt_topic }}
+  </li>
+</ul>

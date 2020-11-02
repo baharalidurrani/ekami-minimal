@@ -20,6 +20,10 @@ export class UnregisteredComponent implements OnInit {
   constructor(private unregisteredQL: BrokerUnregisteredClientsGQL) {}
 
   ngOnInit() {
+    console.log(
+      '%cunregistered.component.ts line:23 ngOnInit',
+      'color: white; background-color: #26bfa5;'
+    );
     this.unregistered$ = this.unregisteredQL.fetch();
     this.unregisteredSub = this.unregistered$.subscribe((r) => {
       this.clients = r.data.brokerUnregisteredClients;

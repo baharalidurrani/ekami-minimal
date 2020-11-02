@@ -5,5 +5,9 @@ query devices {
     mqtt_topic
     configuredIcon
     is_configured
+    deviceType {
+      id
+      name
+    }
   }
 }

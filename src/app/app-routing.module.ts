@@ -9,6 +9,7 @@ import { OrganizationComponent } from './organization/organization.component';
 import { SiteComponent } from './site/site.component';
 import { ZoneComponent } from './zone/zone.component';
 import { AvailableComponent } from './available/available.component';
+import { ConfiguredComponent } from './configured/configured.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'available',
         component: AvailableComponent,
+      },
+      {
+        path: 'configured',
+        component: ConfiguredComponent,
       },
     ],
   },

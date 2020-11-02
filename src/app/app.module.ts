@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UnregisteredComponent } from './unregistered/unregistered.component';
 import { AvailableComponent } from './available/available.component';
+import { ConfiguredComponent } from './configured/configured.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AvailableComponent } from './available/available.component';
     DeviceComponent,
     UnregisteredComponent,
     AvailableComponent,
+    ConfiguredComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,14 +7,10 @@
 <ul>
   <li *ngFor="let d of devices">
     <hr />
-    {{ d.name }}
+    {{ d.deviceType.name }}
     <br />
     {{ d.mac }}
     <br />
     {{ d.mqtt_topic }}
-    <br />
-    {{ d.is_configured }}
-    <br />
-    {{ d.configuredIcon }}
   </li>
 </ul>
