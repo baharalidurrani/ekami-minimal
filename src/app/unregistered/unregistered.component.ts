@@ -24,7 +24,10 @@ export class UnregisteredComponent implements OnInit {
       '%cunregistered.component.ts line:23 ngOnInit',
       'color: white; background-color: #26bfa5;'
     );
-    this.unregistered$ = this.unregisteredQL.fetch();
+    this.unregistered$ = this.unregisteredQL.fetch(
+      {},
+      { fetchPolicy: 'network-only' }
+    );
     this.unregisteredSub = this.unregistered$.subscribe((r) => {
       this.clients = r.data.brokerUnregisteredClients;
     });

@@ -1,0 +1,10 @@
+mutation registerNewClients {
+  registerNewClients {
+    mac
+    deviceType {
+      id
+      name
+    }
+    mqtt_topic
+  }
+}
