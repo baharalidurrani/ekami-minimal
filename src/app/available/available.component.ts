@@ -18,7 +18,7 @@ export class AvailableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.devices$ = this.devicesQL.fetch();
     this.devicesSub = this.devices$.subscribe((r) => {
-      this.devices = r.data.devices;
+      this.devices = r.data.devices.filter((d) => !d.is_configured);
     });
   }
   syncClients(e) {
