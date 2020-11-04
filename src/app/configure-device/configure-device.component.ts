@@ -1,6 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ZoneType } from '../../generated/graphql';
+import { Observable, Subscription } from 'rxjs';
+import { ApolloQueryResult } from '@apollo/client/core';
+import {
+  DevicesGQL,
+  DevicesQuery,
+  DeviceType,
+  ZoneType,
+} from '../../generated/graphql';
 
 @Component({
   selector: 'app-configure-device',
@@ -8,15 +15,14 @@ import { ZoneType } from '../../generated/graphql';
   styleUrls: ['./configure-device.component.css'],
 })
 export class ConfigureDeviceComponent implements OnInit {
-  list = [
-    { name: 'Alice', age: 20 },
-    { name: 'Bob', age: 30 },
-    { name: 'Joe', age: 40 },
-  ];
-  selected;
+  devices$: Observable<ApolloQueryResult<DevicesQuery>>;
+  devicesSub: Subscription;
+  devices: DeviceType[];
+  selectedDevice: DeviceType;
   constructor(
     public dialogRef: MatDialogRef<ConfigureDeviceComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ZoneType // private myControl: FormControl
+    @Inject(MAT_DIALOG_DATA) public data: ZoneType,
+    private devicesQL: DevicesGQL
   ) {}
 
   ngOnInit() {
@@ -25,6 +31,10 @@ export class ConfigureDeviceComponent implements OnInit {
       'color: #007acc;',
       this.data
     );
+    this.devices$ = this.devicesQL.fetch();
+    this.devicesSub = this.devices$.subscribe((r) => {
+      this.devices = r.data.devices.filter((d) => !d.is_configured);
+    });
   }
 
   onNoClick() {
@@ -36,6 +46,9 @@ export class ConfigureDeviceComponent implements OnInit {
       '%cconfigure-device.component.ts line:21 submit',
       'color: #007acc;'
     );
-    this.dialogRef.close({ selected: this.selected, zoneID: this.data.id });
+    this.dialogRef.close({
+      selected: this.selectedDevice,
+      zoneID: this.data.id,
+    });
   }
 }

@@ -1,13 +1,11 @@
 <mat-form-field appearance="fill">
-  <mat-label>Favorite food</mat-label>
-  <mat-select [(value)]="selected">
-    <mat-option *ngFor="let d of list" [value]="d">
-      {{ d.name }}
+  <mat-label>Select a Module</mat-label>
+  <mat-select [(value)]="selectedDevice">
+    <mat-option *ngFor="let d of devices" [value]="d">
+      {{ d.mqtt_topic }}
     </mat-option>
   </mat-select>
 </mat-form-field>
-<hr />
-Selected Name: {{ selected?.name }} Selected Age: {{ selected?.age }}
 
 <div mat-dialog-actions>
   <button mat-button (click)="submitDevice()" cdkFocusInitial>Add</button>
