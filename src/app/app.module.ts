@@ -1,23 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ModulesComponent } from './modules/modules.component';
-import { SiteComponent } from './site/site.component';
-import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
-import { OrganizationComponent } from './organization/organization.component';
-import { FloorComponent } from './floor/floor.component';
-import { ZoneComponent } from './zone/zone.component';
-import { ExplorerComponent } from './explorer/explorer.component';
-import { DeviceComponent } from './device/device.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { GraphQLModule } from './graphql.module';
+
+import { AppComponent } from './app.component';
+import { ExplorerComponent } from './explorer/explorer.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { SiteComponent } from './site/site.component';
+import { FloorComponent } from './floor/floor.component';
+import { ZoneComponent } from './zone/zone.component';
+import { DeviceComponent } from './device/device.component';
+import { ModulesComponent } from './modules/modules.component';
 import { UnregisteredComponent } from './unregistered/unregistered.component';
 import { AvailableComponent } from './available/available.component';
 import { ConfiguredComponent } from './configured/configured.component';
+import { ConfigureDeviceComponent } from './configure-device/configure-device.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,7 @@ import { ConfiguredComponent } from './configured/configured.component';
     UnregisteredComponent,
     AvailableComponent,
     ConfiguredComponent,
+    ConfigureDeviceComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +49,11 @@ import { ConfiguredComponent } from './configured/configured.component';
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
