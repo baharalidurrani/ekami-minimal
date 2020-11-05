@@ -1,8 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
-import { ApolloQueryResult } from '@apollo/client/core';
+import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import {
+  AddConfigureDeviceGQL,
+  AddConfigureDeviceMutation,
   DevicesGQL,
   DevicesQuery,
   DeviceType,
@@ -17,17 +19,21 @@ const DEVICE_TEXT = `{'fontSize':15,'originX':'center','originY':'center','top':
   templateUrl: './configure-device.component.html',
   styleUrls: ['./configure-device.component.css'],
 })
-export class ConfigureDeviceComponent implements OnInit {
+export class ConfigureDeviceComponent implements OnInit, OnDestroy {
   devices$: Observable<ApolloQueryResult<DevicesQuery>>;
   devicesSub: Subscription;
   devices: DeviceType[];
   selectedDevice: DeviceType;
   deviceName = '';
-  deviceCategory = 'AC';
+  configuredIcon = 'AC';
+  addDevice$: Observable<FetchResult<AddConfigureDeviceMutation>>;
+  addDeviceSub: Subscription;
+
   constructor(
     public dialogRef: MatDialogRef<ConfigureDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ZoneType,
-    private devicesQL: DevicesGQL
+    private devicesQL: DevicesGQL,
+    private addDevice: AddConfigureDeviceGQL
   ) {}
 
   ngOnInit() {
@@ -43,12 +49,23 @@ export class ConfigureDeviceComponent implements OnInit {
   }
 
   submitDevice() {
-    const data = {
-      selected: this.selectedDevice,
+    this.addDevice$ = this.addDevice.mutate({
       zoneID: this.data.id,
-      deviceName: this.deviceName,
-      deviceCategory: this.deviceCategory,
-    };
-    this.dialogRef.close(true);
+      device: {
+        mac: this.selectedDevice.mac,
+        deviceIcon: DEVICE_ICON,
+        deviceText: DEVICE_TEXT,
+        configuredIcon: this.configuredIcon,
+        name: this.deviceName,
+      },
+    });
+    this.addDeviceSub = this.addDevice$.subscribe((r) => {
+      if (r.data.addConfigureDevice.mac) this.dialogRef.close(true);
+      this.dialogRef.close(false);
+    });
+  }
+  ngOnDestroy() {
+    if (this.devicesSub) this.devicesSub.unsubscribe();
+    if (this.addDeviceSub) this.addDeviceSub.unsubscribe();
   }
 }
