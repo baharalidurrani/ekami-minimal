@@ -35,11 +35,18 @@ export class ZoneComponent implements OnInit, OnDestroy {
     );
     if (!this.zone) {
       const id = this.route.snapshot.params['id'];
-      this.zone$ = this.zoneQL.fetch({ id });
-      this.zoneSub = this.zone$.subscribe((f) => {
-        this.zone = f.data.zone;
-      });
+      this.fetchDevices(id);
     }
+  }
+
+  private fetchDevices(id: string, refresh?: boolean) {
+    this.zone$ = refresh
+      ? this.zoneQL.fetch({ id }, { fetchPolicy: 'network-only' })
+      : this.zoneQL.fetch({ id });
+    if (this.zoneSub) this.zoneSub.unsubscribe();
+    this.zoneSub = this.zone$.subscribe((f) => {
+      this.zone = f.data.zone;
+    });
   }
 
   expandDevice(device: DeviceType) {
@@ -53,11 +60,7 @@ export class ZoneComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(ConfigureDeviceComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((success) => {
-      console.log(
-        '%czone.component.ts line:56 success',
-        'color: #007acc;',
-        success
-      );
+      if (success) this.fetchDevices(this.zone.id, true);
     });
   }
 

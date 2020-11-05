@@ -60,8 +60,8 @@ export class ConfigureDeviceComponent implements OnInit, OnDestroy {
       },
     });
     this.addDeviceSub = this.addDevice$.subscribe((r) => {
-      if (r.data.addConfigureDevice.mac) this.dialogRef.close(true);
-      this.dialogRef.close(false);
+      if (r.data.addConfigureDevice) this.dialogRef.close(true);
+      else this.dialogRef.close(false);
     });
   }
   ngOnDestroy() {
