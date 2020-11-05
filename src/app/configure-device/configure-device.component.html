@@ -21,16 +21,13 @@
 
 <mat-form-field class="full-width">
   <mat-label>Device Category</mat-label>
-  <input
-    matInput
-    placeholder="Ex. AC"
-    value="AC"
-    [(ngModel)]="deviceCategory"
-  />
+  <input matInput placeholder="Ex. AC" [(ngModel)]="deviceCategory" />
 </mat-form-field>
 <!-- </form> -->
 
 <div mat-dialog-actions>
-  <button mat-button (click)="submitDevice()" cdkFocusInitial>Add</button>
-  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button color="primary" mat-dialog-close>Cancel</button>
+  <button mat-button color="accent" (click)="submitDevice()" cdkFocusInitial>
+    Add
+  </button>
 </div>

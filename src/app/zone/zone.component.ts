@@ -52,13 +52,12 @@ export class ZoneComponent implements OnInit, OnDestroy {
     dialogConfig.data = this.zone;
 
     const dialogRef = this.dialog.open(ConfigureDeviceComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result?.selected)
-        console.log(
-          '%czone.component.ts line:67 result',
-          'color: #007acc;',
-          result
-        );
+    dialogRef.afterClosed().subscribe((success) => {
+      console.log(
+        '%czone.component.ts line:56 success',
+        'color: #007acc;',
+        success
+      );
     });
   }
 

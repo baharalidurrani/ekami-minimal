@@ -23,7 +23,7 @@ export class ConfigureDeviceComponent implements OnInit {
   devices: DeviceType[];
   selectedDevice: DeviceType;
   deviceName = '';
-  deviceCategory = '';
+  deviceCategory = 'AC';
   constructor(
     public dialogRef: MatDialogRef<ConfigureDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ZoneType,
@@ -33,18 +33,13 @@ export class ConfigureDeviceComponent implements OnInit {
   ngOnInit() {
     console.log(
       '%cconfigure-device.component.ts line:17 onInit',
-      'color: #007acc;',
-      this.data
+      'color: #007acc;'
     );
     this.dialogRef.updateSize('60%');
     this.devices$ = this.devicesQL.fetch();
     this.devicesSub = this.devices$.subscribe((r) => {
       this.devices = r.data.devices.filter((d) => !d.is_configured);
     });
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
   }
 
   submitDevice() {
@@ -54,10 +49,6 @@ export class ConfigureDeviceComponent implements OnInit {
       deviceName: this.deviceName,
       deviceCategory: this.deviceCategory,
     };
-    console.log(
-      '%cconfigure-device.component.ts line:21 submit',
-      'color: #007acc;'
-    );
-    this.dialogRef.close(data);
+    this.dialogRef.close(true);
   }
 }
