@@ -14,3 +14,7 @@ a {
 ul {
   list-style-type: none;
 }
+
+.full-width {
+  width: 100%;
+}

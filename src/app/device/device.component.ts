@@ -76,10 +76,12 @@ export class DeviceComponent implements OnInit, OnDestroy {
         const payload = JSON.parse(
           result.data.getDeviceLatestResult[i].payload
         );
-        if (payload.POWER) {
+        if (payload?.POWER) {
           this.powerState = payload.POWER;
           break;
         }
+        if (i + 1 === result.data.getDeviceLatestResult.length)
+          this.powerState = 'UNKNOWN';
       }
     });
 

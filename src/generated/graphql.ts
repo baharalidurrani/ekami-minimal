@@ -817,6 +817,7 @@ export type Mutation = {
   addManyDevices: Array<DeviceType>;
   updateDeviceData: DeviceType;
   updateSingleTimer: DeviceTimerType;
+  addConfigureDevice: DeviceType;
   addDeviceToZone: DeviceType;
   updateDevice: DeviceType;
   updateDeviceConfiguration: DeviceType;
@@ -1034,6 +1035,12 @@ export type MutationUpdateDeviceDataArgs = {
 
 export type MutationUpdateSingleTimerArgs = {
   timer: DeviceTimerInput;
+};
+
+
+export type MutationAddConfigureDeviceArgs = {
+  device: DeviceInput;
+  zoneID: Scalars['String'];
 };
 
 
@@ -1306,6 +1313,24 @@ export type ThingLogTypeString = {
   lwt?: Maybe<Scalars['String']>;
   device?: Maybe<DeviceType>;
 };
+
+export type AddConfigureDeviceMutationVariables = Exact<{
+  device: DeviceInput;
+  zoneID: Scalars['String'];
+}>;
+
+
+export type AddConfigureDeviceMutation = (
+  { __typename?: 'Mutation' }
+  & { addConfigureDevice: (
+    { __typename?: 'DeviceType' }
+    & Pick<DeviceType, 'mac' | 'name' | 'mqtt_topic' | 'configuredIcon'>
+    & { deviceType?: Maybe<(
+      { __typename?: 'DeviceTypeType' }
+      & Pick<DeviceTypeType, 'id' | 'name'>
+    )> }
+  ) }
+);
 
 export type CamsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1648,6 +1673,31 @@ export type ZoneQuery = (
   ) }
 );
 
+export const AddConfigureDeviceDocument = gql`
+    mutation addConfigureDevice($device: DeviceInput!, $zoneID: String!) {
+  addConfigureDevice(device: $device, zoneID: $zoneID) {
+    mac
+    name
+    mqtt_topic
+    configuredIcon
+    deviceType {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddConfigureDeviceGQL extends Apollo.Mutation<AddConfigureDeviceMutation, AddConfigureDeviceMutationVariables> {
+    document = AddConfigureDeviceDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const CamsDocument = gql`
     query cams {
   cams {

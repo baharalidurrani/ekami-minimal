@@ -1,0 +1,12 @@
+mutation addConfigureDevice($device: DeviceInput!, $zoneID: String!) {
+  addConfigureDevice(device: $device, zoneID: $zoneID) {
+    mac
+    name
+    mqtt_topic
+    configuredIcon
+    deviceType {
+      id
+      name
+    }
+  }
+}
