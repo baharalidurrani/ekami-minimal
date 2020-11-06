@@ -1,5 +1,10 @@
 <div *ngIf="site">
-  <p>Site: {{ site.name }}</p>
+  <p>
+    Site: {{ site.name }}
+    <button mat-raised-button color="accent" (click)="addFloor($event)">
+      Add Floor
+    </button>
+  </p>
   <ul>
     <strong>Floor List:</strong>
     <li *ngFor="let floor of site.floors">

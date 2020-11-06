@@ -26,6 +26,7 @@ import { AvailableComponent } from './available/available.component';
 import { ConfiguredComponent } from './configured/configured.component';
 import { ConfigureDeviceComponent } from './configure-device/configure-device.component';
 import { AddZoneComponent } from './add-zone/add-zone.component';
+import { AddFloorComponent } from './add-floor/add-floor.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AddZoneComponent } from './add-zone/add-zone.component';
     ConfiguredComponent,
     ConfigureDeviceComponent,
     AddZoneComponent,
+    AddFloorComponent,
   ],
   imports: [
     BrowserModule,

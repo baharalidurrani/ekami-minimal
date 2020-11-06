@@ -1,0 +1,12 @@
+<p>add-floor works!</p>
+<mat-form-field class="full-width">
+  <mat-label>Floor Name</mat-label>
+  <input matInput placeholder="Dev Hall" [(ngModel)]="floorName" />
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button color="primary" mat-dialog-close>Cancel</button>
+  <button mat-button color="accent" (click)="submitFloor()" cdkFocusInitial>
+    Add
+  </button>
+</div>
