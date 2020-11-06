@@ -1,0 +1,7 @@
+mutation addFloorToSite($siteId: String!, $floor: FloorInput!) {
+  addFloorToSite(siteId: $siteId, floor: $floor) {
+    id
+    name
+    image
+  }
+}

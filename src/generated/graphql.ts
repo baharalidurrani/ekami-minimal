@@ -1336,6 +1336,20 @@ export type AddConfigureDeviceMutation = (
   ) }
 );
 
+export type AddFloorToSiteMutationVariables = Exact<{
+  siteId: Scalars['String'];
+  floor: FloorInput;
+}>;
+
+
+export type AddFloorToSiteMutation = (
+  { __typename?: 'Mutation' }
+  & { addFloorToSite: (
+    { __typename?: 'FloorType' }
+    & Pick<FloorType, 'id' | 'name' | 'image'>
+  ) }
+);
+
 export type AddZoneToFloorMutationVariables = Exact<{
   floorId: Scalars['String'];
   zone: ZoneInput;
@@ -1711,6 +1725,26 @@ export const AddConfigureDeviceDocument = gql`
   })
   export class AddConfigureDeviceGQL extends Apollo.Mutation<AddConfigureDeviceMutation, AddConfigureDeviceMutationVariables> {
     document = AddConfigureDeviceDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddFloorToSiteDocument = gql`
+    mutation addFloorToSite($siteId: String!, $floor: FloorInput!) {
+  addFloorToSite(siteId: $siteId, floor: $floor) {
+    id
+    name
+    image
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddFloorToSiteGQL extends Apollo.Mutation<AddFloorToSiteMutation, AddFloorToSiteMutationVariables> {
+    document = AddFloorToSiteDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
