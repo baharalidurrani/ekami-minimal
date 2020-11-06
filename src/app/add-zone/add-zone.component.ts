@@ -1,13 +1,21 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddZoneToFloorGQL } from '../../generated/graphql';
+import { FetchResult } from '@apollo/client/core';
+import { Observable, Subscription } from 'rxjs';
+import {
+  AddZoneToFloorGQL,
+  AddZoneToFloorMutation,
+} from '../../generated/graphql';
 
 @Component({
   selector: 'app-add-zone',
   templateUrl: './add-zone.component.html',
   styleUrls: ['./add-zone.component.css'],
 })
-export class AddZoneComponent implements OnInit {
+export class AddZoneComponent implements OnInit, OnDestroy {
+  zoneName: string;
+  addZone$: Observable<FetchResult<AddZoneToFloorMutation>>;
+  addZoneSub: Subscription;
   constructor(
     public dialogRef: MatDialogRef<AddZoneComponent>,
     @Inject(MAT_DIALOG_DATA) public floorID: string,
@@ -15,14 +23,28 @@ export class AddZoneComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(
-      '%cadd-zone.component.ts line:18 ngOnInit',
-      'color: #007acc;',
-      this.floorID
-    );
+    console.log('%cadd-zone.component.ts line:18 ngOnInit', 'color: #007acc;');
+    this.dialogRef.updateSize('60%');
   }
 
   submitZone() {
-    this.addZoneQL.mutate({ floorId: this.floorID, zone: {} });
+    // TODO
+    // Need to include other details like:
+    // canvasText
+    // canvasRect
+    // parent
+    // etc
+    this.addZone$ = this.addZoneQL.mutate({
+      floorId: this.floorID,
+      zone: { name: this.zoneName },
+    });
+    this.addZoneSub = this.addZone$.subscribe((r) => {
+      if (r.data.addZoneToFloor.id) this.dialogRef.close(true);
+      else this.dialogRef.close(false);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.addZoneSub) this.addZoneSub.unsubscribe();
   }
 }
