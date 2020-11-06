@@ -1,5 +1,10 @@
 <div *ngIf="floor">
-  <p>Floor: {{ floor.name }}</p>
+  <p>
+    Floor: {{ floor.name }}
+    <button mat-raised-button color="accent" (click)="addZone($event)">
+      Add Zone
+    </button>
+  </p>
   <ul>
     <strong>Zone List:</strong>
     <li *ngFor="let zone of floor.zones">

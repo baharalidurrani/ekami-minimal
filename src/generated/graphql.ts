@@ -501,6 +501,8 @@ export type UserType = {
   first_name?: Maybe<Scalars['String']>;
   last_name?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
   newUser?: Maybe<Scalars['Boolean']>;
   role?: Maybe<RoleType>;
   organization?: Maybe<OrganizationType>;
@@ -1209,6 +1211,8 @@ export type UserInput = {
   last_name: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
+  phoneNumber: Scalars['String'];
+  username: Scalars['String'];
 };
 
 export type ZoneInput = {
@@ -1329,6 +1333,20 @@ export type AddConfigureDeviceMutation = (
       { __typename?: 'DeviceTypeType' }
       & Pick<DeviceTypeType, 'id' | 'name'>
     )> }
+  ) }
+);
+
+export type AddZoneToFloorMutationVariables = Exact<{
+  floorId: Scalars['String'];
+  zone: ZoneInput;
+}>;
+
+
+export type AddZoneToFloorMutation = (
+  { __typename?: 'Mutation' }
+  & { addZoneToFloor: (
+    { __typename?: 'ZoneType' }
+    & Pick<ZoneType, 'id' | 'name' | 'canvasRect' | 'canvasText' | 'canvasGroup' | 'parent' | 'updated_at' | 'created_at'>
   ) }
 );
 
@@ -1693,6 +1711,31 @@ export const AddConfigureDeviceDocument = gql`
   })
   export class AddConfigureDeviceGQL extends Apollo.Mutation<AddConfigureDeviceMutation, AddConfigureDeviceMutationVariables> {
     document = AddConfigureDeviceDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddZoneToFloorDocument = gql`
+    mutation addZoneToFloor($floorId: String!, $zone: ZoneInput!) {
+  addZoneToFloor(floorId: $floorId, zone: $zone) {
+    id
+    name
+    canvasRect
+    canvasText
+    canvasGroup
+    parent
+    updated_at
+    created_at
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddZoneToFloorGQL extends Apollo.Mutation<AddZoneToFloorMutation, AddZoneToFloorMutationVariables> {
+    document = AddZoneToFloorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

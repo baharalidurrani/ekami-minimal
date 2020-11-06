@@ -1,0 +1,12 @@
+mutation addZoneToFloor($floorId: String!, $zone: ZoneInput!) {
+  addZoneToFloor(floorId: $floorId, zone: $zone) {
+    id
+    name
+    canvasRect
+    canvasText
+    canvasGroup
+    parent
+    updated_at
+    created_at
+  }
+}
