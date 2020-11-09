@@ -1,0 +1,7 @@
+mutation newSite($site: SiteInput!) {
+  newSite(site: $site) {
+    id
+    name
+    location
+  }
+}

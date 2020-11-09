@@ -1476,6 +1476,19 @@ export type GetThingsLatestLogsQuery = (
   )> }
 );
 
+export type NewSiteMutationVariables = Exact<{
+  site: SiteInput;
+}>;
+
+
+export type NewSiteMutation = (
+  { __typename?: 'Mutation' }
+  & { newSite: (
+    { __typename?: 'SiteType' }
+    & Pick<SiteType, 'id' | 'name' | 'location'>
+  ) }
+);
+
 export type OrganizationQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1931,6 +1944,26 @@ export const GetThingsLatestLogsDocument = gql`
   })
   export class GetThingsLatestLogsGQL extends Apollo.Query<GetThingsLatestLogsQuery, GetThingsLatestLogsQueryVariables> {
     document = GetThingsLatestLogsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const NewSiteDocument = gql`
+    mutation newSite($site: SiteInput!) {
+  newSite(site: $site) {
+    id
+    name
+    location
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class NewSiteGQL extends Apollo.Mutation<NewSiteMutation, NewSiteMutationVariables> {
+    document = NewSiteDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
