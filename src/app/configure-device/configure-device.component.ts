@@ -3,6 +3,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {
   AddConfigureDeviceGQL,
   AddConfigureDeviceMutation,
   DevicesGQL,
@@ -23,9 +29,7 @@ export class ConfigureDeviceComponent implements OnInit, OnDestroy {
   devices$: Observable<ApolloQueryResult<DevicesQuery>>;
   devicesSub: Subscription;
   devices: DeviceType[];
-  selectedDevice: DeviceType;
-  deviceName = '';
-  configuredIcon = 'AC';
+  deviceForm: FormGroup;
   addDevice$: Observable<FetchResult<AddConfigureDeviceMutation>>;
   addDeviceSub: Subscription;
 
@@ -33,10 +37,16 @@ export class ConfigureDeviceComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<ConfigureDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ZoneType,
     private devicesQL: DevicesGQL,
-    private addDevice: AddConfigureDeviceGQL
+    private addDevice: AddConfigureDeviceGQL,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
+    this.deviceForm = this.formBuilder.group({
+      deviceName: new FormControl('', Validators.required),
+      configuredIcon: new FormControl('AC', Validators.required),
+      selectedDevice: new FormControl('', Validators.required),
+    });
     console.log(
       '%cconfigure-device.component.ts line:17 onInit',
       'color: #007acc;'
@@ -52,11 +62,11 @@ export class ConfigureDeviceComponent implements OnInit, OnDestroy {
     this.addDevice$ = this.addDevice.mutate({
       zoneID: this.data.id,
       device: {
-        mac: this.selectedDevice.mac,
+        mac: this.deviceForm.value.selectedDevice.mac,
         deviceIcon: DEVICE_ICON,
         deviceText: DEVICE_TEXT,
-        configuredIcon: this.configuredIcon,
-        name: this.deviceName,
+        configuredIcon: this.deviceForm.value.configuredIcon,
+        name: this.deviceForm.value.deviceName,
       },
     });
     this.addDeviceSub = this.addDevice$.subscribe((r) => {
