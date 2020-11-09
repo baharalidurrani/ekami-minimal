@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
@@ -9,6 +10,7 @@ import {
   UserType,
   ZoneType,
 } from '../../generated/graphql';
+import { AddSiteComponent } from '../add-site/add-site.component';
 
 @Component({
   selector: 'app-explorer',
@@ -16,7 +18,10 @@ import {
   styleUrls: ['./explorer.component.css'],
 })
 export class ExplorerComponent implements OnInit, OnDestroy {
-  constructor(private userOrg: UserOrganizationGQL) {}
+  constructor(
+    private userOrg: UserOrganizationGQL,
+    private dialog: MatDialog
+  ) {}
 
   userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
   user: UserType;
@@ -39,7 +44,24 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     else this.selectedSite = site;
   }
 
+  refreshOrg() {
+    this.userOrg$ = this.userOrg.fetch({}, { fetchPolicy: 'network-only' });
+    if (this.userOrgSub) this.userOrgSub.unsubscribe();
+    this.userOrgSub = this.userOrg$.subscribe((result) => {
+      this.user = result.data.userOrganization;
+    });
+  }
+  addSite() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = this.user.organization.id;
+
+    const dialogRef = this.dialog.open(AddSiteComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((success) => {
+      if (success) this.refreshOrg();
+    });
+  }
+
   ngOnDestroy() {
-    this.userOrgSub.unsubscribe();
+    if (this.userOrgSub) this.userOrgSub.unsubscribe();
   }
 }

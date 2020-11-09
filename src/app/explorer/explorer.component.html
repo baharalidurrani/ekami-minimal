@@ -1,5 +1,10 @@
 <div *ngIf="user">
-  <p>Org: {{ user.organization.name }}</p>
+  <p>
+    Org: {{ user.organization.name }}
+    <button mat-raised-button color="accent" (click)="addSite($event)">
+      Add Site
+    </button>
+  </p>
   <ul>
     <strong>Site List:</strong>
     <li *ngFor="let site of user.organization.sites">
