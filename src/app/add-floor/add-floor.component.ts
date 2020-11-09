@@ -1,4 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FetchResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
@@ -13,14 +19,19 @@ import {
   styleUrls: ['./add-floor.component.css'],
 })
 export class AddFloorComponent implements OnInit, OnDestroy {
-  floorName: string;
+  floorForm: FormGroup;
   addFloor$: Observable<FetchResult<AddFloorToSiteMutation>>;
   addSiteSub: Subscription;
   constructor(
     public dialogRef: MatDialogRef<AddFloorComponent>,
     @Inject(MAT_DIALOG_DATA) public siteID: string,
-    private addFloorQL: AddFloorToSiteGQL
-  ) {}
+    private addFloorQL: AddFloorToSiteGQL,
+    private formBuilder: FormBuilder
+  ) {
+    this.floorForm = this.formBuilder.group({
+      floorName: new FormControl('', Validators.required),
+    });
+  }
 
   ngOnInit(): void {
     console.log('%cadd-floor.component.ts line:16 ngOnInit', 'color: #007acc;');
@@ -31,7 +42,7 @@ export class AddFloorComponent implements OnInit, OnDestroy {
     // need to add floor image
     this.addFloor$ = this.addFloorQL.mutate({
       siteId: this.siteID,
-      floor: { name: this.floorName, image: '' },
+      floor: { name: this.floorForm.value.floorName, image: '' },
     });
     this.addSiteSub = this.addFloor$.subscribe((r) => {
       if (r.data.addFloorToSite.id) this.dialogRef.close(true);
