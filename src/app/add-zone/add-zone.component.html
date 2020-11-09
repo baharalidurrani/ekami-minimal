@@ -1,11 +1,18 @@
-<mat-form-field class="full-width">
-  <mat-label>Zone Name</mat-label>
-  <input matInput placeholder="Dev Hall" [(ngModel)]="zoneName" />
-</mat-form-field>
+<form [formGroup]="zoneForm" (ngSubmit)="submitZone()">
+  <mat-form-field class="full-width">
+    <mat-label>Zone Name</mat-label>
+    <input matInput placeholder="Dev Hall" formControlName="zoneName" />
+  </mat-form-field>
 
-<div mat-dialog-actions>
-  <button mat-button color="primary" mat-dialog-close>Cancel</button>
-  <button mat-button color="accent" (click)="submitZone()" cdkFocusInitial>
-    Add
-  </button>
-</div>
+  <div mat-dialog-actions>
+    <button mat-button color="primary" mat-dialog-close>Cancel</button>
+    <button
+      mat-button
+      color="accent"
+      type="submit"
+      [disabled]="!zoneForm.valid"
+    >
+      Add
+    </button>
+  </div>
+</form>
