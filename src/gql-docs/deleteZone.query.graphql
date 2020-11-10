@@ -1,0 +1,5 @@
+query deleteZone($id: String!) {
+  deleteZone(id: $id) {
+    id
+  }
+}

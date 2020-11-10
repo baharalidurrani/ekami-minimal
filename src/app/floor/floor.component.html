@@ -14,6 +14,9 @@
       <a routerLink="/zone/{{ zone.id }}" routerLinkActive="active">
         {{ zone.name }}
       </a>
+      <button mat-raised-button color="accent" (click)="deleteZone(zone.id)">
+        Delete
+      </button>
     </li>
     <div *ngIf="selectedZone">
       <app-zone [zone]="selectedZone"></app-zone>

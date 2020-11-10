@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
+  DeleteZoneGQL,
   FloorGQL,
   FloorQuery,
   FloorType,
@@ -20,7 +21,8 @@ export class FloorComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private floorQL: FloorGQL,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private deleteZoneQL: DeleteZoneGQL
   ) {}
 
   @Input() floor?: FloorType;
@@ -62,6 +64,15 @@ export class FloorComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddZoneComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) this.fetchFloor(this.floor.id, true);
+    });
+  }
+
+  deleteZone(id) {
+    console.log('delete zone id', id);
+    const delSub = this.deleteZoneQL.fetch({ id }).subscribe((r) => {
+      this.fetchFloor(this.floor.id, true);
+      if (this.selectedZone?.id === id) this.selectedZone = null;
+      delSub.unsubscribe();
     });
   }
 

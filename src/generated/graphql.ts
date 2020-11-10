@@ -1401,6 +1401,19 @@ export type DeleteSiteQuery = (
   ) }
 );
 
+export type DeleteZoneQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteZoneQuery = (
+  { __typename?: 'Query' }
+  & { deleteZone: (
+    { __typename?: 'ZoneType' }
+    & Pick<ZoneType, 'id'>
+  ) }
+);
+
 export type DeviceQueryVariables = Exact<{
   mac: Scalars['String'];
 }>;
@@ -1864,6 +1877,24 @@ export const DeleteSiteDocument = gql`
   })
   export class DeleteSiteGQL extends Apollo.Query<DeleteSiteQuery, DeleteSiteQueryVariables> {
     document = DeleteSiteDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteZoneDocument = gql`
+    query deleteZone($id: String!) {
+  deleteZone(id: $id) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteZoneGQL extends Apollo.Query<DeleteZoneQuery, DeleteZoneQueryVariables> {
+    document = DeleteZoneDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
