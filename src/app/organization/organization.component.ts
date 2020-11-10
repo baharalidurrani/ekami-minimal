@@ -68,6 +68,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   deleteSite(id: string) {
     const delSub = this.deleteSiteQL.fetch({ id }).subscribe((r) => {
       this.fetchOrg(this.org.id, true);
+      if (this.selectedSite?.id === id) this.selectedSite = null;
       delSub.unsubscribe();
     });
   }

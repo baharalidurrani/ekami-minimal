@@ -14,6 +14,9 @@
       <a routerLink="/site/{{ site.id }}" routerLinkActive="active">
         {{ site.name }}
       </a>
+      <button mat-raised-button color="accent" (click)="deleteSite(site.id)">
+        Delete
+      </button>
     </li>
     <div *ngIf="selectedSite">
       <app-site [site]="selectedSite"></app-site>

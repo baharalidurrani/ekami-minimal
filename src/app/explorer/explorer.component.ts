@@ -3,12 +3,11 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
-  FloorType,
+  DeleteSiteGQL,
   SiteType,
   UserOrganizationGQL,
   UserOrganizationQuery,
   UserType,
-  ZoneType,
 } from '../../generated/graphql';
 import { AddSiteComponent } from '../add-site/add-site.component';
 
@@ -20,7 +19,8 @@ import { AddSiteComponent } from '../add-site/add-site.component';
 export class ExplorerComponent implements OnInit, OnDestroy {
   constructor(
     private userOrg: UserOrganizationGQL,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private deleteSiteQL: DeleteSiteGQL
   ) {}
 
   userOrg$: Observable<ApolloQueryResult<UserOrganizationQuery>>;
@@ -58,6 +58,14 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddSiteComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) this.refreshOrg();
+    });
+  }
+
+  deleteSite(id: string) {
+    const delSub = this.deleteSiteQL.fetch({ id }).subscribe((r) => {
+      this.refreshOrg();
+      if (this.selectedSite?.id === id) this.selectedSite = null;
+      delSub.unsubscribe();
     });
   }
 
