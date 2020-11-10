@@ -1,0 +1,5 @@
+query deleteFloor($id: String!) {
+  deleteFloor(id: $id) {
+    id
+  }
+}

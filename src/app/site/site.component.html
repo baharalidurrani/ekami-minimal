@@ -14,6 +14,9 @@
       <a routerLink="/floor/{{ floor.id }}" routerLinkActive="active">
         {{ floor.name }}
       </a>
+      <button mat-raised-button color="accent" (click)="deleteFloor(floor.id)">
+        Delete
+      </button>
     </li>
     <div *ngIf="selectedFloor">
       <app-floor [floor]="selectedFloor"></app-floor>

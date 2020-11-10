@@ -1375,6 +1375,19 @@ export type CamsQuery = (
   )> }
 );
 
+export type DeleteFloorQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteFloorQuery = (
+  { __typename?: 'Query' }
+  & { deleteFloor: (
+    { __typename?: 'FloorType' }
+    & Pick<FloorType, 'id'>
+  ) }
+);
+
 export type DeleteSiteQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1815,6 +1828,24 @@ export const CamsDocument = gql`
   })
   export class CamsGQL extends Apollo.Query<CamsQuery, CamsQueryVariables> {
     document = CamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteFloorDocument = gql`
+    query deleteFloor($id: String!) {
+  deleteFloor(id: $id) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteFloorGQL extends Apollo.Query<DeleteFloorQuery, DeleteFloorQueryVariables> {
+    document = DeleteFloorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

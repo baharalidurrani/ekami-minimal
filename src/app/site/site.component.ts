@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
+  DeleteFloorGQL,
   FloorType,
   SiteGQL,
   SiteQuery,
@@ -20,7 +21,8 @@ export class SiteComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private siteQL: SiteGQL,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private deleteFloorQL: DeleteFloorGQL
   ) {}
 
   @Input() site?: SiteType;
@@ -66,6 +68,14 @@ export class SiteComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddFloorComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) this.fetchSite(this.site.id, true);
+    });
+  }
+
+  deleteFloor(id) {
+    const delSub = this.deleteFloorQL.fetch({ id }).subscribe((r) => {
+      this.fetchSite(this.site.id, true);
+      if (this.selectedFloor?.id === id) this.selectedFloor = null;
+      delSub.unsubscribe();
     });
   }
 
