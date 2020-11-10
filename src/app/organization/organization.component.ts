@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import {
+  DeleteSiteGQL,
   OrganizationGQL,
   OrganizationQuery,
   OrganizationType,
@@ -20,7 +21,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private orgQL: OrganizationGQL,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private deleteSiteQL: DeleteSiteGQL
   ) {}
 
   org: OrganizationType;
@@ -60,6 +62,13 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddSiteComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) this.fetchOrg(this.org.id, true);
+    });
+  }
+
+  deleteSite(id: string) {
+    const delSub = this.deleteSiteQL.fetch({ id }).subscribe((r) => {
+      this.fetchOrg(this.org.id, true);
+      delSub.unsubscribe();
     });
   }
 

@@ -1375,6 +1375,19 @@ export type CamsQuery = (
   )> }
 );
 
+export type DeleteSiteQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteSiteQuery = (
+  { __typename?: 'Query' }
+  & { deleteSite: (
+    { __typename?: 'SiteType' }
+    & Pick<SiteType, 'id'>
+  ) }
+);
+
 export type DeviceQueryVariables = Exact<{
   mac: Scalars['String'];
 }>;
@@ -1802,6 +1815,24 @@ export const CamsDocument = gql`
   })
   export class CamsGQL extends Apollo.Query<CamsQuery, CamsQueryVariables> {
     document = CamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteSiteDocument = gql`
+    query deleteSite($id: String!) {
+  deleteSite(id: $id) {
+    id
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteSiteGQL extends Apollo.Query<DeleteSiteQuery, DeleteSiteQueryVariables> {
+    document = DeleteSiteDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

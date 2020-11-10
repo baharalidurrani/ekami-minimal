@@ -1,0 +1,5 @@
+query deleteSite($id: String!) {
+  deleteSite(id: $id) {
+    id
+  }
+}
