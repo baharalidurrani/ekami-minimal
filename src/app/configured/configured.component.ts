@@ -20,9 +20,9 @@ export class ConfiguredComponent implements OnInit {
       '%cconfigured.component.ts line:19 ngOnInit',
       'color: white; background-color: #26bfa5;'
     );
-    this.devices$ = this.devicesQL.fetch();
+    this.devices$ = this.devicesQL.fetch({}, { fetchPolicy: 'network-only' });
     this.devicesSub = this.devices$.subscribe((r) => {
-      this.devices = r.data.devices.filter((d) => d.is_configured);
+      this.devices = r.data.devices;
     });
   }
   ngOnDestroy() {

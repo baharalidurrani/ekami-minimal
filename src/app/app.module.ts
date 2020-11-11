@@ -22,7 +22,6 @@ import { ZoneComponent } from './zone/zone.component';
 import { DeviceComponent } from './device/device.component';
 import { ModulesComponent } from './modules/modules.component';
 import { UnregisteredComponent } from './unregistered/unregistered.component';
-import { AvailableComponent } from './available/available.component';
 import { ConfiguredComponent } from './configured/configured.component';
 import { ConfigureDeviceComponent } from './configure-device/configure-device.component';
 import { AddZoneComponent } from './add-zone/add-zone.component';
@@ -40,7 +39,6 @@ import { AddSiteComponent } from './add-site/add-site.component';
     ExplorerComponent,
     DeviceComponent,
     UnregisteredComponent,
-    AvailableComponent,
     ConfiguredComponent,
     ConfigureDeviceComponent,
     AddZoneComponent,
