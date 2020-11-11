@@ -815,7 +815,6 @@ export type Mutation = {
   newZone: ZoneType;
   addZoneToFloor: ZoneType;
   updateZone: ZoneType;
-  registerNewClients: Array<DeviceType>;
   updateDeviceAllTimers: DeviceType;
   updateDevicePowerOnState: DeviceType;
   updateDeviceVoltageMonitorState: DeviceType;
@@ -1592,21 +1591,6 @@ export type PowerCommandQuery = (
   ) }
 );
 
-export type RegisterNewClientsMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type RegisterNewClientsMutation = (
-  { __typename?: 'Mutation' }
-  & { registerNewClients: Array<(
-    { __typename?: 'DeviceType' }
-    & Pick<DeviceType, 'mac' | 'mqtt_topic'>
-    & { deviceType?: Maybe<(
-      { __typename?: 'DeviceTypeType' }
-      & Pick<DeviceTypeType, 'id' | 'name'>
-    )> }
-  )> }
-);
-
 export type SiteQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -2156,29 +2140,6 @@ export const PowerCommandDocument = gql`
   })
   export class PowerCommandGQL extends Apollo.Query<PowerCommandQuery, PowerCommandQueryVariables> {
     document = PowerCommandDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const RegisterNewClientsDocument = gql`
-    mutation registerNewClients {
-  registerNewClients {
-    mac
-    deviceType {
-      id
-      name
-    }
-    mqtt_topic
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class RegisterNewClientsGQL extends Apollo.Mutation<RegisterNewClientsMutation, RegisterNewClientsMutationVariables> {
-    document = RegisterNewClientsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

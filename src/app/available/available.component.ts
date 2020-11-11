@@ -1,12 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
-import {
-  DevicesGQL,
-  DevicesQuery,
-  DeviceType,
-  RegisterNewClientsGQL,
-} from '../../generated/graphql';
+import { DevicesGQL, DevicesQuery, DeviceType } from '../../generated/graphql';
 
 @Component({
   selector: 'app-available',
@@ -18,10 +13,7 @@ export class AvailableComponent implements OnInit, OnDestroy {
   devicesSub: Subscription;
   devices: DeviceType[];
 
-  constructor(
-    private devicesQL: DevicesGQL,
-    private register: RegisterNewClientsGQL
-  ) {}
+  constructor(private devicesQL: DevicesGQL) {}
 
   ngOnInit(): void {
     console.log(
@@ -42,23 +34,7 @@ export class AvailableComponent implements OnInit, OnDestroy {
       this.devices = r.data.devices.filter((d) => !d.is_configured);
     });
   }
-  syncClients({ currentTarget }: { currentTarget: HTMLButtonElement }) {
-    // currentTarget.disabled = true;
-    // setTimeout(() => {
-    //   currentTarget.disabled = false;
-    // }, 2 * 1000);
-    console.log(
-      '%cavailable.component.ts line:15 syncClients',
-      'color: #007acc;'
-    );
-    // TODO handel exception
-    const regSub = this.register
-      .mutate({}, { errorPolicy: 'ignore' })
-      .subscribe((r) => {
-        this.fetchDevices(true);
-        regSub.unsubscribe();
-      });
-  }
+
   ngOnDestroy() {
     if (this.devicesSub) this.devicesSub.unsubscribe();
   }
