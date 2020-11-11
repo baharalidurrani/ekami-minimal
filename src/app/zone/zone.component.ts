@@ -4,6 +4,7 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { Observable, Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
+  DeleteDeviceHardGQL,
   DeviceType,
   ZoneGQL,
   ZoneQuery,
@@ -20,7 +21,8 @@ export class ZoneComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private zoneQL: ZoneGQL,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private deleteDeviceHardQL: DeleteDeviceHardGQL
   ) {}
 
   @Input() zone: ZoneType;
@@ -61,6 +63,14 @@ export class ZoneComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfigureDeviceComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((success) => {
       if (success) this.fetchDevices(this.zone.id, true);
+    });
+  }
+
+  deleteDevice(mac) {
+    const delSub = this.deleteDeviceHardQL.fetch({ mac }).subscribe((r) => {
+      this.fetchDevices(this.zone.id, true);
+      if (this.selectedDevice?.mac === mac) this.selectedDevice = null;
+      delSub.unsubscribe();
     });
   }
 

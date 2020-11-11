@@ -16,6 +16,9 @@
       <a routerLink="/device/{{ d.mac }}" routerLinkActive="active">
         {{ d.name }}
       </a>
+      <button mat-raised-button color="accent" (click)="deleteDevice(d.mac)">
+        Delete
+      </button>
     </li>
     <br />
     <div *ngIf="selectedDevice">

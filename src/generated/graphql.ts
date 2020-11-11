@@ -79,6 +79,7 @@ export type Query = {
   brokerUnregisteredClients: Array<BrokerDeviceType>;
   getThingsLatestLogs: Array<ThingLogResultType>;
   getThingLatestSensorLogs: DeviceSensorLogs;
+  deleteDeviceHard: Scalars['String'];
   deleteDevice?: Maybe<DeviceType>;
   updateDeviceMac: DeviceType;
   getDevicesWithStatus: ThingStateType;
@@ -309,6 +310,11 @@ export type QueryGetThingsLatestLogsArgs = {
 
 
 export type QueryGetThingLatestSensorLogsArgs = {
+  mac: Scalars['String'];
+};
+
+
+export type QueryDeleteDeviceHardArgs = {
   mac: Scalars['String'];
 };
 
@@ -1375,6 +1381,16 @@ export type CamsQuery = (
   )> }
 );
 
+export type DeleteDeviceHardQueryVariables = Exact<{
+  mac: Scalars['String'];
+}>;
+
+
+export type DeleteDeviceHardQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'deleteDeviceHard'>
+);
+
 export type DeleteFloorQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1841,6 +1857,22 @@ export const CamsDocument = gql`
   })
   export class CamsGQL extends Apollo.Query<CamsQuery, CamsQueryVariables> {
     document = CamsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteDeviceHardDocument = gql`
+    query deleteDeviceHard($mac: String!) {
+  deleteDeviceHard(mac: $mac)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteDeviceHardGQL extends Apollo.Query<DeleteDeviceHardQuery, DeleteDeviceHardQueryVariables> {
+    document = DeleteDeviceHardDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
