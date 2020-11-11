@@ -2,8 +2,8 @@
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Select a Module</mat-label>
     <mat-select formControlName="selectedDevice">
-      <mat-option *ngFor="let d of devices" [value]="d">
-        {{ d.mqtt_topic }}
+      <mat-option *ngFor="let d of clients" [value]="d">
+        {{ d.topic }}
       </mat-option>
     </mat-select>
   </mat-form-field>

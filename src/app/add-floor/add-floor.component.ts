@@ -40,9 +40,10 @@ export class AddFloorComponent implements OnInit, OnDestroy {
   submitFloor() {
     // TODO
     // need to add floor image
+    const IMAGE = `https://via.placeholder.com/640x480`;
     this.addFloor$ = this.addFloorQL.mutate({
       siteId: this.siteID,
-      floor: { name: this.floorForm.value.floorName, image: '' },
+      floor: { name: this.floorForm.value.floorName, image: IMAGE },
     });
     this.addSiteSub = this.addFloor$.subscribe((r) => {
       if (r.data.addFloorToSite.id) this.dialogRef.close(true);

@@ -11,14 +11,15 @@ import {
 import {
   AddConfigureDeviceGQL,
   AddConfigureDeviceMutation,
-  DevicesGQL,
-  DevicesQuery,
-  DeviceType,
+  BrokerDeviceType,
+  BrokerUnregisteredClientsGQL,
+  BrokerUnregisteredClientsQuery,
   ZoneType,
 } from '../../generated/graphql';
 
-const DEVICE_ICON = `{'top':0,'left':0,'originX':'center','originY':'center','cornerStyle':'circle','opacity':2}`;
-const DEVICE_TEXT = `{'fontSize':15,'originX':'center','originY':'center','top':25,'left':0}`;
+const DEVICE_ICON = `{"top":0,"left":0,"originX":"center","originY":"center","cornerStyle":"circle","opacity":2}`;
+const DEVICE_TEXT = `{"fontSize":15,"originX":"center","originY":"center","top":25,"left":0}`;
+const DEVICE_GROUP = `{"top":null,"left":null,"originX":"center","originY":"center","height":20,"width":40,"scaleY":null,"scaleX":null,"hasControls":false,"chosedIcon":"AC","deviceName":"Device Group Name"}`;
 
 @Component({
   selector: 'app-configure-device',
@@ -26,35 +27,39 @@ const DEVICE_TEXT = `{'fontSize':15,'originX':'center','originY':'center','top':
   styleUrls: ['./configure-device.component.css'],
 })
 export class ConfigureDeviceComponent implements OnInit, OnDestroy {
-  devices$: Observable<ApolloQueryResult<DevicesQuery>>;
-  devicesSub: Subscription;
-  devices: DeviceType[];
+  unregistered$: Observable<ApolloQueryResult<BrokerUnregisteredClientsQuery>>;
+  unregisteredSub: Subscription;
+  clients: BrokerDeviceType[];
   deviceForm: FormGroup;
   addDevice$: Observable<FetchResult<AddConfigureDeviceMutation>>;
   addDeviceSub: Subscription;
 
   constructor(
-    public dialogRef: MatDialogRef<ConfigureDeviceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ZoneType,
-    private devicesQL: DevicesGQL,
+    public dialogRef: MatDialogRef<ConfigureDeviceComponent>,
+    private unregisteredQL: BrokerUnregisteredClientsGQL,
     private addDevice: AddConfigureDeviceGQL,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
+    console.log(
+      '%cconfigure-device.component.ts line:45 ngOnInit',
+      'color: white; background-color: #007acc;'
+    );
+    this.dialogRef.updateSize('60%');
     this.deviceForm = this.formBuilder.group({
       deviceName: new FormControl('', Validators.required),
       configuredIcon: new FormControl('AC', Validators.required),
       selectedDevice: new FormControl('', Validators.required),
     });
-    console.log(
-      '%cconfigure-device.component.ts line:17 onInit',
-      'color: #007acc;'
+
+    this.unregistered$ = this.unregisteredQL.fetch(
+      {},
+      { fetchPolicy: 'network-only' }
     );
-    this.dialogRef.updateSize('60%');
-    this.devices$ = this.devicesQL.fetch();
-    this.devicesSub = this.devices$.subscribe((r) => {
-      this.devices = r.data.devices.filter((d) => !d.is_configured);
+    this.unregisteredSub = this.unregistered$.subscribe((r) => {
+      this.clients = r.data.brokerUnregisteredClients;
     });
   }
 
@@ -63,8 +68,10 @@ export class ConfigureDeviceComponent implements OnInit, OnDestroy {
       zoneID: this.data.id,
       device: {
         mac: this.deviceForm.value.selectedDevice.mac,
+        mqtt_topic: this.deviceForm.value.selectedDevice.topic,
         deviceIcon: DEVICE_ICON,
         deviceText: DEVICE_TEXT,
+        deviceGroup: DEVICE_GROUP,
         configuredIcon: this.deviceForm.value.configuredIcon,
         name: this.deviceForm.value.deviceName,
       },
@@ -75,7 +82,7 @@ export class ConfigureDeviceComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
-    if (this.devicesSub) this.devicesSub.unsubscribe();
+    if (this.unregisteredSub) this.unregisteredSub.unsubscribe();
     if (this.addDeviceSub) this.addDeviceSub.unsubscribe();
   }
 }
